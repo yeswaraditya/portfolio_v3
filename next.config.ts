@@ -1,12 +1,12 @@
 import type { NextConfig } from "next";
 
-const isProd = process.env.NODE_ENV === "production";
-const repoName = "portfolio_v3"; // Your repository name
+const isGithubActions = process.env.GITHUB_ACTIONS === "true";
+const repoName = "portfolio_v3";
 
 const nextConfig: NextConfig = {
   output: "export",
-  basePath: isProd ? `/${repoName}` : "",
-  assetPrefix: isProd ? `/${repoName}` : "",
+  basePath: isGithubActions ? `/${repoName}` : "",
+  assetPrefix: isGithubActions ? `/${repoName}` : "",
   images: {
     unoptimized: true,
   },
