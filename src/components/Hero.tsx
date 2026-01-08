@@ -19,6 +19,14 @@ export default function Hero() {
       stagger: 0.2,
       ease: "power3.out",
     });
+
+    // Image slide animation: Move from left (0-50%) to right (50-100%)
+    gsap.to(".leaf-wrapper", {
+      xPercent: 100,
+      duration: 1.5,
+      ease: "power3.inOut",
+      delay: 0.5, 
+    });
   }, { scope: containerRef });
 
   return (
@@ -27,20 +35,20 @@ export default function Hero() {
       <div className="relative w-full h-full">
         {/* 1. Pink Leaves Box (Left) */}
         <div className="hero-element absolute top-[30%] left-[5%] w-[25vw] h-[8vw] min-w-[250px] min-h-[80px] border border-gray-400 bg-white flex">
-           <div className="w-1/2 h-full relative overflow-hidden">
+           <div className="leaf-wrapper w-1/2 h-full relative overflow-hidden">
              <Image src="/pink_leaves.png" alt="Pink leaves" fill className="object-cover" />
            </div>
         </div>
 
         {/* 2. Purple Leaves Box (Center Top) */}
-        <div className="hero-element absolute top-[10%] left-[35%] w-[25vw] h-[8vw] min-w-[250px] min-h-[80px] border border-gray-400 bg-white flex">
-          <div className="w-1/2 h-full relative overflow-hidden">
+        <div className="hero-element absolute top-[15%] left-[35%] w-[25vw] h-[8vw] min-w-[250px] min-h-[80px] border border-gray-400 bg-white flex">
+          <div className="leaf-wrapper w-1/2 h-full relative overflow-hidden">
              <Image src="/violet_leaves.png" alt="Violet leaves" fill className="object-cover" />
            </div>
         </div>
 
         {/* 3. Black Box (Center) */}
-        <div className="hero-element absolute top-[60%] left-[50%] -translate-x-1/2 -translate-y-1/2 bg-black px-6 py-4 w-[30vw] min-w-[300px] z-20 shadow-xl flex flex-col justify-between">
+        <div className="hero-element absolute top-[70%] left-[50%] -translate-x-1/2 -translate-y-1/2 bg-black px-6 py-4 w-[25vw] min-w-[200px] z-20 shadow-xl flex flex-col justify-between">
             <div className="text-accent-orange text-xs md:text-base font-mono flex justify-between w-full mb-4 md:mb-8 font-bold">
                 <span>{translate("humansDie")}</span>
                 <span>DIEEEE</span>
