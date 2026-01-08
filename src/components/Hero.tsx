@@ -40,7 +40,7 @@ export default function Hero() {
         </div>
 
         {/* 3. Black Box (Center) */}
-        <div className="hero-element absolute top-[60%] left-[50%] -translate-x-1/2 -translate-y-1/2 bg-black px-12 py-8 min-w-[300px] md:w-[600px] z-20 shadow-xl flex flex-col justify-between">
+        <div className="hero-element absolute top-[60%] left-[50%] -translate-x-1/2 -translate-y-1/2 bg-black px-6 py-4 w-[30vw] min-w-[300px] z-20 shadow-xl flex flex-col justify-between">
             <div className="text-accent-orange text-xs md:text-base font-mono flex justify-between w-full mb-4 md:mb-8 font-bold">
                 <span>{translate("humansDie")}</span>
                 <span>DIEEEE</span>
