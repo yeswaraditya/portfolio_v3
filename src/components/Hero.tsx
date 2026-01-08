@@ -20,12 +20,20 @@ export default function Hero() {
       ease: "power3.out",
     });
 
-    // Image slide animation: Move from left (0-50%) to right (50-100%)
-    gsap.to(".leaf-wrapper", {
+    // Violet leaves: Left to Right (Start at 0, Go to 100%)
+    gsap.to(".leaf-wrapper-violet", {
       xPercent: 100,
       duration: 1.5,
       ease: "power3.inOut",
-      delay: 0.5, 
+      delay: 0.5,
+    });
+
+    // Pink leaves: Right to Left (Start at 100%, Go to 0)
+    gsap.from(".leaf-wrapper-pink", {
+      xPercent: 100,
+      duration: 1.5,
+      ease: "power3.inOut",
+      delay: 0.5,
     });
   }, { scope: containerRef });
 
@@ -35,14 +43,14 @@ export default function Hero() {
       <div className="relative w-full h-full">
         {/* 1. Pink Leaves Box (Left) */}
         <div className="hero-element absolute top-[30%] left-[5%] w-[25vw] h-[8vw] min-w-[250px] min-h-[80px] border border-gray-400 bg-white flex">
-           <div className="leaf-wrapper w-1/2 h-full relative overflow-hidden">
+           <div className="leaf-wrapper-pink w-1/2 h-full relative overflow-hidden">
              <Image src="/pink_leaves.png" alt="Pink leaves" fill className="object-cover" />
            </div>
         </div>
 
         {/* 2. Purple Leaves Box (Center Top) */}
         <div className="hero-element absolute top-[15%] left-[35%] w-[25vw] h-[8vw] min-w-[250px] min-h-[80px] border border-gray-400 bg-white flex">
-          <div className="leaf-wrapper w-1/2 h-full relative overflow-hidden">
+          <div className="leaf-wrapper-violet w-1/2 h-full relative overflow-hidden">
              <Image src="/violet_leaves.png" alt="Violet leaves" fill className="object-cover" />
            </div>
         </div>
