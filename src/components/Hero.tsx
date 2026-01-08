@@ -26,30 +26,32 @@ export default function Hero() {
       
       <div className="relative w-full h-full">
         {/* 1. Pink Leaves Box (Left) */}
-        <div className="hero-element absolute top-[30%] left-[5%] w-[25vw] h-[8vw] min-w-[250px] min-h-[80px] border border-gray-400 p-1 bg-white flex">
-           <div className="w-[60%] h-full relative overflow-hidden">
+        <div className="hero-element absolute top-[30%] left-[5%] w-[25vw] h-[8vw] min-w-[250px] min-h-[80px] border border-gray-400 bg-white flex">
+           <div className="w-1/2 h-full relative overflow-hidden">
              <Image src="/pink_leaves.png" alt="Pink leaves" fill className="object-cover" />
            </div>
         </div>
 
         {/* 2. Purple Leaves Box (Center Top) */}
-        <div className="hero-element absolute top-[10%] left-[35%] w-[25vw] h-[8vw] min-w-[250px] min-h-[80px] border border-gray-400 p-1 bg-white flex">
-          <div className="w-[60%] h-full relative overflow-hidden">
+        <div className="hero-element absolute top-[10%] left-[35%] w-[25vw] h-[8vw] min-w-[250px] min-h-[80px] border border-gray-400 bg-white flex">
+          <div className="w-1/2 h-full relative overflow-hidden">
              <Image src="/violet_leaves.png" alt="Violet leaves" fill className="object-cover" />
            </div>
         </div>
 
         {/* 3. Black Box (Center) */}
-        <div className="hero-element absolute top-[60%] left-[30%] -translate-y-1/2 bg-black p-4 md:p-8 z-20 shadow-xl">
-            <div className="text-accent-orange text-[10px] md:text-sm font-mono flex justify-between mb-1">
+        <div className="hero-element absolute top-[60%] left-[50%] -translate-x-1/2 -translate-y-1/2 bg-black px-12 py-8 min-w-[300px] md:min-w-[500px] z-20 shadow-xl flex flex-col justify-between">
+            <div className="text-accent-orange text-xs md:text-base font-mono flex justify-between w-full mb-4 md:mb-8 font-bold">
                 <span>{translate("humansDie")}</span>
                 <span>DIEEEE</span>
             </div>
-            <div className="text-accent-orange text-3xl md:text-6xl font-bold tracking-tighter">
-                {translate("art")}
-            </div>
-            <div className="text-accent-orange text-[10px] md:text-sm font-mono text-center mt-1">
-                {translate("artWont")}
+            <div className="flex flex-col items-center justify-center">
+                <div className="text-accent-orange text-5xl md:text-8xl font-bold tracking-tighter leading-none">
+                    {translate("art")}
+                </div>
+                <div className="text-accent-orange text-sm md:text-xl font-mono mt-2 tracking-widest">
+                    {translate("artWont")}
+                </div>
             </div>
         </div>
 
