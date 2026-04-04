@@ -24,40 +24,40 @@ type CategoryKey =
   | "Case Studies"
   | "Wallpapers"
   | "Figma Community"
-  | "iOS Development"
+  | "Ios Development"
   | "Courses"
   | "Notion Templates"
   | "Graphic Design"
   | "Stickers"
-  | "Chrome Extensions"
-  | "VSCode Extensions";
+  | "chrome extensions"
+  | "vscode extensions";
 
 // Map keys to components
 const ComponentMap: Record<CategoryKey, React.ComponentType> = {
   "Case Studies": CaseStudiesContent,
   "Wallpapers": WallpapersContent,
   "Figma Community": FigmaCommunityContent,
-  "iOS Development": IOSDevelopmentContent,
+  "Ios Development": IOSDevelopmentContent,
   "Courses": CoursesContent,
   "Notion Templates": NotionTemplatesContent,
   "Graphic Design": GraphicDesignContent,
   "Stickers": StickersContent,
-  "Chrome Extensions": ChromeExtensionsContent,
-  "VSCode Extensions": VSCodeExtensionsContent,
+  "chrome extensions": ChromeExtensionsContent,
+  "vscode extensions": VSCodeExtensionsContent,
 };
 
 // Data for the grid items
 const categories: { name: CategoryKey; colorClass: string; textColor?: string }[] = [
-  { name: "Case Studies", colorClass: "bg-[#3B82F6]", textColor: "text-black" },
-  { name: "Wallpapers", colorClass: "bg-black", textColor: "text-white" },
-  { name: "Figma Community", colorClass: "bg-[#FF69B4]", textColor: "text-black" }, // Hot Pink
-  { name: "iOS Development", colorClass: "bg-black", textColor: "text-white" },
-  { name: "Courses", colorClass: "bg-black", textColor: "text-white" },
-  { name: "Notion Templates", colorClass: "bg-black", textColor: "text-white" },
-  { name: "Graphic Design", colorClass: "bg-black", textColor: "text-white" },
-  { name: "Stickers", colorClass: "bg-black", textColor: "text-white" },
-  { name: "Chrome Extensions", colorClass: "bg-black", textColor: "text-white" },
-  { name: "VSCode Extensions", colorClass: "bg-[#4ADE80]", textColor: "text-black" }, // Green
+  { name: "Case Studies", colorClass: "bg-[#4285F4]", textColor: "text-black" },
+  { name: "Wallpapers", colorClass: "bg-[#EEEEEE]", textColor: "text-black" },
+  { name: "Figma Community", colorClass: "bg-[#FF55FF]", textColor: "text-black" }, // Hot Pink
+  { name: "Ios Development", colorClass: "bg-[#EEEEEE]", textColor: "text-black" },
+  { name: "Courses", colorClass: "bg-[#EEEEEE]", textColor: "text-black" },
+  { name: "Notion Templates", colorClass: "bg-[#EEEEEE]", textColor: "text-black" },
+  { name: "Graphic Design", colorClass: "bg-[#EEEEEE]", textColor: "text-black" },
+  { name: "Stickers", colorClass: "bg-[#EEEEEE]", textColor: "text-black" },
+  { name: "chrome extensions", colorClass: "bg-[#EEEEEE]", textColor: "text-black" },
+  { name: "vscode extensions", colorClass: "bg-[#6DE385]", textColor: "text-black" }, // Green
 ];
 
 export default function ProjectGrid() {
@@ -71,18 +71,16 @@ export default function ProjectGrid() {
   useGSAP(() => {
     // 1. Grid Items Staggered Entrance
     if (gridRef.current) {
-        gsap.from(gridRef.current.children, {
-            scrollTrigger: {
-                trigger: gridRef.current,
-                start: "top 80%",
-                toggleActions: "play none none reverse",
-            },
-            y: 30,
-            opacity: 0,
-            duration: 0.6,
-            stagger: 0.05,
-            ease: "power2.out",
-        });
+        gsap.fromTo(gridRef.current.children, 
+            { opacity: 0, y: 15 },
+            {
+                y: 0,
+                opacity: 1,
+                duration: 0.5,
+                stagger: 0.05,
+                ease: "power2.out",
+            }
+        );
     }
   }, { scope: containerRef });
 
@@ -99,15 +97,15 @@ export default function ProjectGrid() {
   return (
     <div ref={containerRef} className="w-full">
       {/* Grid Container */}
-      <div ref={gridRef} className="grid grid-cols-2 md:grid-cols-5 border-t border-l border-white/20">
+      <div ref={gridRef} className="grid grid-cols-2 md:grid-cols-5 border-t border-black w-full">
         {categories.map((cat) => (
           <button
             key={cat.name}
             onClick={() => setActiveCategory(cat.name)}
             className={`
               relative group
-              h-32 md:h-40
-              border-r border-b border-white/20
+              h-24 md:h-32
+              border-r border-b border-black
               flex items-center justify-center
               transition-all duration-300
               ${cat.colorClass}
@@ -115,9 +113,9 @@ export default function ProjectGrid() {
             `}
           >
             {/* Hover overlay for interaction feedback */}
-            <div className="absolute inset-0 bg-white/0 group-hover:bg-white/10 transition-colors" />
+            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors" />
             
-            <span className="font-mono text-sm md:text-base px-2 text-center z-10">
+            <span className="font-mono text-sm md:text-xs px-2 text-center z-10 w-full whitespace-normal md:whitespace-nowrap overflow-hidden text-ellipsis">
               {cat.name}
             </span>
           </button>
@@ -125,7 +123,7 @@ export default function ProjectGrid() {
       </div>
 
       {/* Dynamic Content Area */}
-      <div ref={contentRef} className="min-h-[40vh] bg-black text-white">
+      <div ref={contentRef} className="min-h-[40vh] bg-[#EEEEEE] text-black border-r border-l border-b border-black">
         <ActiveComponent />
       </div>
     </div>

@@ -3,6 +3,7 @@ import { Inter, Space_Mono } from "next/font/google"; // Import Space Mono
 import "./globals.css";
 import { LanguageProvider } from "@/context/LanguageContext";
 import LanguageModal from "@/components/LanguageModal";
+import NavigationProgress from "@/components/NavigationProgress";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -26,6 +27,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${inter.className} ${spaceMono.variable}`}>
         <LanguageProvider>
+          <NavigationProgress />
           {children}
           <LanguageModal />
         </LanguageProvider>
