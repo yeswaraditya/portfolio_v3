@@ -1,13 +1,12 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
-import { usePathname, useSearchParams } from "next/navigation";
+import { usePathname } from "next/navigation";
 import Image from "next/image";
 import gsap from "gsap";
 
 export default function NavigationProgress() {
   const pathname = usePathname();
-  const searchParams = useSearchParams();
   const [showTransition, setShowTransition] = useState(false);
   const overlayRef = useRef<HTMLDivElement>(null);
   const fillRef = useRef<HTMLDivElement>(null);
@@ -46,7 +45,7 @@ export default function NavigationProgress() {
         );
     }, 50);
 
-  }, [pathname, searchParams]);
+  }, [pathname]);
 
   if (!showTransition) return null;
 
