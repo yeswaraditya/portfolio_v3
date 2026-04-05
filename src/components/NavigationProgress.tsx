@@ -12,42 +12,51 @@ export default function NavigationProgress() {
   const fillRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // When pathname changes, we trigger a fast transition
-    setShowTransition(true);
-    
-    // We wait for react to render the transition block
-    setTimeout(() => {
-        if (!fillRef.current || !overlayRef.current) return;
-        
-        // Fast optimized animation
-        gsap.fromTo(
-          fillRef.current,
-          { width: "0%" },
-          { 
-            width: "100%", 
-            duration: 0.5, 
-            ease: "power2.inOut",
-            onComplete: () => {
-                 gsap.to(overlayRef.current, {
-                    opacity: 0,
-                    duration: 0.3,
-                    ease: "power2.out",
-                    onComplete: () => {
-                        setShowTransition(false);
-                        // Reset opacity for next routing
-                        if(overlayRef.current) {
-                           gsap.set(overlayRef.current, { opacity: 1 });
-                        }
-                    }
-                 });
-            }
-          }
-        );
-    }, 50);
+    let animTimeout: ReturnType<typeof setTimeout>;
 
+    // When pathname changes, we trigger a fast transition
+    // Defer the state update to avoid synchronous state transition during render
+    const showTimeout = setTimeout(() => {
+      setShowTransition(true);
+      
+      // We wait for react to render the transition block
+      animTimeout = setTimeout(() => {
+          if (!fillRef.current || !overlayRef.current) return;
+          
+          // Fast optimized animation
+          gsap.fromTo(
+            fillRef.current,
+            { width: "0%" },
+            { 
+              width: "100%", 
+              duration: 0.5, 
+              ease: "power2.inOut",
+              onComplete: () => {
+                   gsap.to(overlayRef.current, {
+                      opacity: 0,
+                      duration: 0.3,
+                      ease: "power2.out",
+                      onComplete: () => {
+                          setShowTransition(false);
+                          // Reset opacity for next routing
+                          if(overlayRef.current) {
+                             gsap.set(overlayRef.current, { opacity: 1 });
+                          }
+                      }
+                   });
+              }
+            }
+          );
+      }, 50);
+    }, 0);
+
+    return () => {
+      clearTimeout(showTimeout);
+      clearTimeout(animTimeout);
+    };
   }, [pathname]);
 
-  if (!showTransition) return null;
+  if (!showTransition || pathname === '/who-am-i') return null;
 
   return (
     <div 

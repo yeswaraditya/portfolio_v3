@@ -13,8 +13,8 @@ export default function UpdatesSection() {
 
   useGSAP(() => {
     // Parallax or simple reveal animation
-    const elements = gsap.utils.toArray(".update-block");
-    elements.forEach((el: any, i) => {
+    const elements = gsap.utils.toArray(".update-block") as HTMLElement[];
+    elements.forEach((el, i) => {
       gsap.from(el, {
         scrollTrigger: {
           trigger: el,
