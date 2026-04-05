@@ -1,10 +1,11 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import { Play, SkipBack, SkipForward, Asterisk } from "lucide-react";
+import { Play, Pause, SkipBack, SkipForward, Asterisk } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useMusic } from "@/context/MusicContext";
 
 export default function BottomGrid() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -12,6 +13,8 @@ export default function BottomGrid() {
   const [isTransitioning, setIsTransitioning] = useState(false);
   const overlayRef = useRef<HTMLDivElement>(null);
   const transitionTextRef = useRef<HTMLDivElement>(null);
+
+  const { isPlaying, currentTrackIndex, playlist, trackName, togglePlay, playNext, playPrev } = useMusic();
 
   useGSAP(() => {
     // Reveal animation
@@ -127,22 +130,56 @@ export default function BottomGrid() {
             <div className="lg:w-[450px] flex flex-col flex-shrink-0">
                 {/* Playlist Widget */}
                 <div className="flex-1 p-4 border-b border-gray-300 flex items-center justify-between bg-[#F0F0F0]">
-                    {/* Blue Pills Graphic Placeholder */}
-                    <div className="grid grid-cols-3 gap-1">
-                        {[...Array(6)].map((_, i) => (
-                            <div key={i} className="w-8 h-4 bg-blue-600 rounded-full relative overflow-hidden">
-                               <div className="absolute inset-0 bg-black/10"></div>
+                    {/* Playlist visualizer */}
+                    <div className="grid grid-cols-3 gap-1.5">
+                        {playlist.map((_, i) => (
+                            <div 
+                                key={i} 
+                                className={`w-8 h-4 rounded-full relative overflow-hidden transition-all duration-500 border border-black/5 ${
+                                    i === currentTrackIndex 
+                                    ? 'bg-blue-600 scale-110 shadow-[0_0_10px_rgba(37,99,235,0.4)]' 
+                                    : 'bg-gray-300'
+                                }`}
+                            >
+                               {i === currentTrackIndex && isPlaying && (
+                                   <div className="absolute inset-0 bg-white/20 animate-pulse"></div>
+                               )}
+                               <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent pointer-events-none"></div>
                             </div>
                         ))}
                     </div>
 
                     {/* Controls */}
-                    <div className="flex flex-col items-end gap-1">
-                        <span className="font-mono text-xs font-bold">My Latest Playlist</span>
-                        <div className="flex items-center gap-3 mt-1">
-                            <SkipBack size={20} className="fill-black cursor-pointer" />
-                            <Play size={20} className="fill-black cursor-pointer" />
-                            <SkipForward size={20} className="fill-black cursor-pointer" />
+                    <div className="flex flex-col items-end gap-0.5">
+                        <div className="flex flex-col items-end mr-1 mb-1">
+                            <span className="font-mono text-[9px] font-black opacity-40 uppercase tracking-widest leading-none">
+                                {isPlaying ? "Playing Track" : "Paused"}
+                            </span>
+                            <span className="font-mono text-[11px] font-bold whitespace-nowrap overflow-hidden text-ellipsis max-w-[180px] mt-0.5">
+                                {trackName}
+                            </span>
+                        </div>
+                        <div className="flex items-center gap-3">
+                            <SkipBack 
+                                size={18} 
+                                className="fill-black cursor-pointer hover:scale-110 active:scale-95 transition-transform" 
+                                onClick={playPrev}
+                            />
+                            <div 
+                                className="bg-black rounded-full p-2 cursor-pointer hover:scale-105 active:scale-95 transition-transform shadow-lg"
+                                onClick={togglePlay}
+                            >
+                                {isPlaying ? (
+                                    <Pause size={14} className="text-white fill-white" />
+                                ) : (
+                                    <Play size={14} className="text-white fill-white ml-0.5" />
+                                )}
+                            </div>
+                            <SkipForward 
+                                size={18} 
+                                className="fill-black cursor-pointer hover:scale-110 active:scale-95 transition-transform" 
+                                onClick={playNext}
+                            />
                         </div>
                     </div>
                 </div>

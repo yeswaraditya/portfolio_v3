@@ -74,10 +74,10 @@ export default function Hero() {
         {/* 4. Portrait Image (Right) */}
         <div className="hero-element absolute top-[15%] right-[5%] w-[25vw] h-[35vw] max-w-[400px] max-h-[500px] border border-gray-400 z-10">
             {/* Crosshairs */}
-            <div className="absolute -top-3 -left-3 w-6 h-6 text-gray-400 text-2xl">+</div>
-            <div className="absolute -top-3 -right-3 w-6 h-6 text-gray-400 text-2xl">+</div>
-            <div className="absolute -bottom-3 -left-3 w-6 h-6 text-gray-400 text-2xl">+</div>
-            <div className="absolute -bottom-3 -right-3 w-6 h-6 text-gray-400 text-2xl">+</div>
+            <div className="absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2 w-4 h-4 flex items-center justify-center text-black text-2xl font-light z-20">+</div>
+            <div className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 w-4 h-4 flex items-center justify-center text-black text-2xl font-light z-20">+</div>
+            <div className="absolute bottom-0 left-0 -translate-x-1/2 translate-y-1/2 w-4 h-4 flex items-center justify-center text-black text-2xl font-light z-20">+</div>
+            <div className="absolute bottom-0 right-0 translate-x-1/2 translate-y-1/2 w-4 h-4 flex items-center justify-center text-black text-2xl font-light z-20">+</div>
 
             <div className="w-full h-full  relative overflow-hidden">
                  {/* Placeholder for Profile Image */}

@@ -2,8 +2,10 @@ import type { Metadata } from "next";
 import { Inter, Space_Mono } from "next/font/google"; // Import Space Mono
 import "./globals.css";
 import { LanguageProvider } from "@/context/LanguageContext";
+import { MusicProvider } from "@/context/MusicContext";
 import LanguageModal from "@/components/LanguageModal";
 import NavigationProgress from "@/components/NavigationProgress";
+import CustomCursor from "@/components/CustomCursor";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -27,9 +29,12 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${inter.className} ${spaceMono.variable}`}>
         <LanguageProvider>
-          <NavigationProgress />
-          {children}
-          <LanguageModal />
+          <MusicProvider>
+            <CustomCursor />
+            <NavigationProgress />
+            {children}
+            <LanguageModal />
+          </MusicProvider>
         </LanguageProvider>
       </body>
     </html>
