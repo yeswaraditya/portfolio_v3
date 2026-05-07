@@ -6,6 +6,7 @@ import { MusicProvider } from "@/context/MusicContext";
 import LanguageModal from "@/components/LanguageModal";
 import NavigationProgress from "@/components/NavigationProgress";
 import CustomCursor from "@/components/CustomCursor";
+import { Analytics } from "@vercel/analytics/next";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -36,6 +37,7 @@ export default function RootLayout({
             <LanguageModal />
           </MusicProvider>
         </LanguageProvider>
+        <Analytics />
       </body>
     </html>
   );
