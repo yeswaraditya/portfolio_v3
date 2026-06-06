@@ -185,7 +185,10 @@ export default function BottomGrid() {
                 </div>
 
                 {/* Coffee Section */}
-                <div className="h-16 flex items-center justify-center p-4 cursor-pointer hover:bg-white transition-colors">
+                <div
+                  className="h-16 flex items-center justify-center p-4 cursor-pointer hover:bg-white transition-colors"
+                  onClick={() => router.push("/coffee")}
+                >
                     <span className="font-mono text-xs md:text-sm tracking-wider">Let&apos;s have a coffee together!</span>
                 </div>
             </div>

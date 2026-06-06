@@ -12,10 +12,10 @@ export default function Header() {
   const { translate } = useLanguage();
   const { isPlaying, togglePlay, trackName } = useMusic();
   const pathname = usePathname();
-  const isTransparent = pathname === "/who-am-i";
+  const isTransparent = pathname === "/who-am-i" || pathname === "/coffee";
 
   return (
-    <header className={`fixed top-0 left-0 w-full z-50 px-6 py-6 md:px-12 text-black font-mono text-sm uppercase tracking-wide ${isTransparent ? "bg-transparent" : "bg-[#EEEEEE]"}`}>
+    <header className={`fixed top-0 left-0 w-full z-50 px-6 py-6 md:px-12 text-black text-sm uppercase tracking-wide ${isTransparent ? "bg-transparent" : "bg-[#EEEEEE]"}`} style={{ fontFamily: "var(--font-roboto)" }}>
       <div className="flex flex-row items-center justify-between w-full h-full">
         {/* Logo & Music Toggle */}
         <div className="flex items-center gap-6">
@@ -48,9 +48,9 @@ export default function Header() {
 
         {/* Navigation */}
         <div className="flex flex-row items-center space-x-8 md:space-x-24">
-           <Link href="/#skills" className="hover:text-accent-orange transition-colors inline-block whitespace-nowrap">{translate("skills")}</Link>
+           <Link href="/skills" className="hover:text-accent-orange transition-colors inline-block whitespace-nowrap">{translate("skills")}</Link>
            <Link href="/passion-projects" className="hover:text-accent-orange transition-colors inline-block whitespace-nowrap">{translate("passionProjects")}</Link>
-           <div className="hidden md:inline-block whitespace-nowrap">{translate("replyTime")}</div>
+           <Link href="/reply" className="hover:text-accent-orange transition-colors hidden md:inline-block whitespace-nowrap">{translate("replyTime")}</Link>
         </div>
       </div>
     </header>

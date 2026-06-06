@@ -23,6 +23,11 @@ export default function CustomCursor() {
     const cursor = cursorRef.current;
     if (!cursor) return;
 
+    // Set hotspot offset once — adjust these to align fingertip with click point.
+    // xPercent/yPercent shift the element by % of its own size, persisting across GSAP x/y updates.
+    // Positive xPercent shifts right, negative shifts left (same for y).
+    gsap.set(cursor, { xPercent: -30, yPercent: -10 });
+
     const moveCursor = (e: MouseEvent) => {
       gsap.to(cursor, {
         x: e.clientX,
@@ -46,9 +51,6 @@ export default function CustomCursor() {
     <div
       ref={cursorRef}
       className="fixed top-0 left-0 w-24 h-24 pointer-events-none z-[999999]"
-      style={{
-        transform: "translate(-10%, -10%)", // Default initial, updated by GSAP
-      }}
     >
       <div className="relative w-full h-full">
           <Image 

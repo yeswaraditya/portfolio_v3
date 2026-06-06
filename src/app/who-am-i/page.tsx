@@ -3,7 +3,7 @@ import WhoAmIContent from "@/components/WhoAmIContent";
 
 export default function WhoAmIPage() {
   return (
-    <main className="h-screen w-screen overflow-hidden bg-accent-orange text-black relative">
+    <main className="min-h-screen w-full bg-accent-orange text-black overflow-x-hidden">
       <Header />
       <WhoAmIContent />
     </main>

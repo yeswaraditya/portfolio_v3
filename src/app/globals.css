@@ -3,7 +3,7 @@
 :root {
   --background: #EEEEEE;
   --foreground: #000000;
-  --accent-orange: #FF6E00;
+  --accent-orange: #FF4D00;
   --accent-yellow: #FFD700;
 }
 
@@ -14,6 +14,8 @@
   --color-accent-yellow: var(--accent-yellow);
   --font-sans: var(--font-inter);
   --font-mono: var(--font-space-mono);
+  --font-roboto: var(--font-roboto);
+  --font-cabinet: var(--font-cabinet);
 }
 
 @layer utilities {

@@ -100,23 +100,41 @@ export default function ProjectGrid() {
       <div ref={gridRef} className="grid grid-cols-2 md:grid-cols-5 border-t border-black w-full">
         {categories.map((cat) => {
           const isActive = activeCategory === cat.name;
+          const isFigma = cat.name === "Figma Community";
+          const sharedClassName = `
+            relative group
+            h-24 md:h-32
+            border-r border-b border-black
+            flex items-center justify-center
+            transition-colors duration-300
+            text-black
+            ${isActive ? cat.colorClass : `bg-[#EEEEEE] ${cat.hoverClass}`}
+          `;
+
+          if (isFigma) {
+            return (
+              <a
+                key={cat.name}
+                href="https://www.figma.com/@eswaraditya"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={sharedClassName}
+              >
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors" />
+                <span className="font-mono text-sm md:text-xs px-2 text-center z-10 w-full whitespace-normal md:whitespace-nowrap overflow-hidden text-ellipsis">
+                  {cat.name}
+                </span>
+              </a>
+            );
+          }
+
           return (
             <button
               key={cat.name}
               onClick={() => setActiveCategory(cat.name)}
-              className={`
-                relative group
-                h-24 md:h-32
-                border-r border-b border-black
-                flex items-center justify-center
-                transition-colors duration-300
-                text-black
-                ${isActive ? cat.colorClass : `bg-[#EEEEEE] ${cat.hoverClass}`}
-              `}
+              className={sharedClassName}
             >
-            {/* Hover overlay for interaction feedback */}
             <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors" />
-            
             <span className="font-mono text-sm md:text-xs px-2 text-center z-10 w-full whitespace-normal md:whitespace-nowrap overflow-hidden text-ellipsis">
               {cat.name}
             </span>
