@@ -33,6 +33,7 @@ function Photo({
   rotate = 0,
   className = "",
   style = {},
+  objectFit = "cover",
 }: {
   src: string;
   alt: string;
@@ -41,13 +42,14 @@ function Photo({
   rotate?: number;
   className?: string;
   style?: React.CSSProperties;
+  objectFit?: "cover" | "contain";
 }) {
   return (
     <div
       className={`relative flex-shrink-0 overflow-hidden ${className}`}
       style={{ width: w, height: h, transform: `rotate(${rotate}deg)`, ...style }}
     >
-      <Image src={src} alt={alt} fill className="object-cover" unoptimized />
+      <Image src={src} alt={alt} fill className={`object-${objectFit}`} unoptimized />
     </div>
   );
 }
@@ -79,12 +81,10 @@ export default function WhoAmIContent() {
         >
           wHo aM&nbsp;&nbsp;ililililili
         </h1>
-        <div className="flex justify-between uppercase text-[10px] md:text-xs mt-3 font-bold px-1">
-          <span>Day-1</span>
+        <div className="flex justify-center uppercase text-[10px] md:text-xs mt-3 font-bold px-1">
           <span className="flex-1 mx-2 flex items-center">
             <span className="flex-1 border-t border-black/40 mt-0.5" />
           </span>
-          <span>Today</span>
         </div>
       </div>
 
@@ -92,7 +92,7 @@ export default function WhoAmIContent() {
       <div className="wai-block flex items-start justify-between px-6 md:px-16 mb-12 md:mb-16">
 
         {/* Left: baby */}
-        <Photo src="/about/baby.jpg" alt="Day 1" w={100} h={100} rotate={-2} />
+        <Photo src="/about/baby.jpg" alt="Day 1" w={220} h={220} rotate={-2} />
 
         {/* Center: birth text */}
         <p className="text-[10px] md:text-xs tracking-wide leading-relaxed mt-2 mx-4 max-w-[200px]">
@@ -115,20 +115,15 @@ export default function WhoAmIContent() {
         </p>
 
         {/* Right: suit photo */}
-        <Photo src="/about/childhood-suit.jpg" alt="Childhood" w={90} h={130} rotate={1} />
-
-        {/* Far right: label */}
-        <span className="text-[10px] font-bold uppercase tracking-widest ml-3 mt-1 whitespace-nowrap">
-          Day - 2
-        </span>
+        <Photo src="/about/childhood-suit.jpg" alt="Childhood" w={200} h={285} rotate={1} />
       </div>
 
       {/* ── ROW 3 · three scattered childhood photos ── */}
-      <div className="wai-block relative px-6 md:px-16 mb-16 md:mb-24" style={{ height: 220 }}>
+      <div className="wai-block relative px-6 md:px-16 mb-16 md:mb-24" style={{ height: 420 }}>
         <Photo
           src="/about/childhood-wall-2.jpg"
           alt="Childhood event"
-          w={120} h={160}
+          w={220} h={290}
           rotate={-3}
           className="absolute"
           style={{ left: 24, bottom: 0 }}
@@ -136,26 +131,26 @@ export default function WhoAmIContent() {
         <Photo
           src="/about/childhood-wall-1.jpg"
           alt="Childhood event"
-          w={100} h={140}
+          w={180} h={250}
           rotate={2}
           className="absolute"
-          style={{ left: 110, top: 10 }}
+          style={{ left: 200, top: 10 }}
         />
         <Photo
           src="/about/childhood-wall-3.jpg"
           alt="Childhood event"
-          w={80} h={110}
+          w={150} h={200}
           rotate={-1}
           className="absolute"
-          style={{ left: 190, bottom: 20 }}
+          style={{ left: 350, bottom: 20 }}
         />
       </div>
 
       {/* ── ROW 4 · childhood faces ── */}
       <div className="wai-block flex items-end justify-between px-6 md:px-16 mb-16 md:mb-24">
         <div className="flex flex-col gap-2">
-          <Photo src="/about/childhood-face-1.jpg" alt="Portrait" w={130} h={100} rotate={-1} />
-          <Photo src="/about/childhood-face-2.jpg" alt="Portrait smiling" w={130} h={100} rotate={1} />
+          <Photo src="/about/childhood-face-1.jpg" alt="Portrait" w={220} h={170} rotate={-1} />
+          <Photo src="/about/childhood-face-2.jpg" alt="Portrait smiling" w={220} h={170} rotate={1} />
         </div>
         <GreenDots size={24} className="mb-4" />
       </div>
@@ -163,13 +158,13 @@ export default function WhoAmIContent() {
       {/* ── ROW 5 · speaking + workshop ── */}
       <div className="wai-block flex items-end justify-between px-6 md:px-16 mb-16 md:mb-24">
         <div className="flex flex-col gap-1">
-          <Photo src="/about/speaking.jpg" alt="Speaking at institute" w={120} h={160} rotate={-2} />
+          <Photo src="/about/speaking.jpg" alt="Speaking at institute" w={210} h={280} rotate={-2} />
           <span className="text-[8px] uppercase tracking-widest text-black/40 max-w-[120px]">
             Sri Siddhartha Institute
           </span>
         </div>
         <div className="flex flex-col gap-1 items-end">
-          <Photo src="/about/figma-workshop-1.jpg" alt="Figma workshop" w={190} h={150} rotate={1} />
+          <Photo src="/about/figma-workshop-1.jpg" alt="Figma workshop" w={330} h={260} rotate={1} />
           <span className="text-[8px] uppercase tracking-widest text-black/40 text-right">
             Figma &amp; UI Workshop
           </span>
@@ -179,7 +174,7 @@ export default function WhoAmIContent() {
       {/* ── ROW 6 · Notion club ── */}
       <div className="wai-block flex items-center justify-between px-6 md:px-16 mb-16 md:mb-24">
         <div className="flex flex-col gap-1">
-          <Photo src="/about/notion-club.jpg" alt="Notion club" w={210} h={165} rotate={-1} />
+          <Photo src="/about/notion-club.jpg" alt="Notion club" w={360} h={280} rotate={-1} objectFit="contain" />
           <span className="text-[8px] uppercase tracking-widest text-black/40">
             Notion Campus Club
           </span>
@@ -190,7 +185,7 @@ export default function WhoAmIContent() {
       {/* ── ROW 7 · Google Developer Groups ── */}
       <div className="wai-block flex justify-center px-6 md:px-16 mb-16 md:mb-24">
         <div className="flex flex-col gap-1 items-center">
-          <Photo src="/about/google-dev.jpg" alt="Google Developer Groups" w={290} h={200} rotate={0} />
+          <Photo src="/about/google-dev.jpg" alt="Google Developer Groups" w={460} h={315} rotate={0} />
           <span className="text-[8px] uppercase tracking-widest text-black/40">
             Google Developer Groups
           </span>
@@ -199,7 +194,7 @@ export default function WhoAmIContent() {
 
       {/* ── ROW 8 · MUSIC N WORK ── */}
       <div className="wai-block flex justify-center px-6 md:px-16">
-        <Photo src="/about/flow-work.gif" alt="MUSIC N WORK" w={200} h={268} rotate={0} />
+        <Photo src="/about/flow-work.gif" alt="MUSIC N WORK" w={340} h={455} rotate={0} objectFit="contain" />
       </div>
 
     </div>

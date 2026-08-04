@@ -9,7 +9,7 @@ interface Shape {
   id: string;
   name: string;
   handle: string;
-  href: string;
+  href?: string;
   bg: string;
   color: string;
   circle?: boolean;
@@ -25,8 +25,8 @@ const shapes: Shape[] = [
   {
     id: "instagram",
     name: "Instagram",
-    handle: "@eswaraditya_y",
-    href: "https://instagram.com/eswaraditya_y",
+    handle: "@eswaraditya5",
+    href: "https://www.instagram.com/eswaraditya5/",
     bg: "#FF2D9F", color: "#fff",
     dot: "#C6FF00",
     w: 130, h: 105, rotate: -3,
@@ -35,8 +35,8 @@ const shapes: Shape[] = [
   {
     id: "twitter",
     name: "𝕏  Twitter",
-    handle: "@eswaraditya_y",
-    href: "https://x.com/eswaraditya_y",
+    handle: "@YarlagaddaEswar",
+    href: "https://x.com/YarlagaddaEswar",
     bg: "#FF9F0A", color: "#000",
     w: 162, h: 90, rotate: 2,
     pos: { left: "36%", top: "36%" },
@@ -44,8 +44,7 @@ const shapes: Shape[] = [
   {
     id: "telegram",
     name: "Telegram",
-    handle: "@eswaraditya",
-    href: "https://t.me/eswaraditya",
+    handle: "soon 😁",
     bg: "#34C759", color: "#000",
     w: 145, h: 105, rotate: 1,
     pos: { right: "5%", top: "41%" },
@@ -55,8 +54,8 @@ const shapes: Shape[] = [
   {
     id: "youtube",
     name: "YouTube",
-    handle: "@eswaraditya",
-    href: "https://youtube.com/@eswaraditya",
+    handle: "@eswar_aditya",
+    href: "https://www.youtube.com/@eswar_aditya",
     bg: "#FF3B30", color: "#fff",
     circle: true,
     w: 110, h: 110, rotate: 0,
@@ -65,8 +64,8 @@ const shapes: Shape[] = [
   {
     id: "github",
     name: "GitHub",
-    handle: "@eswaraditya",
-    href: "https://github.com/eswaraditya",
+    handle: "@yeswaraditya",
+    href: "https://github.com/yeswaraditya",
     bg: "#1C1C1E", color: "#fff",
     dot: "#FF9F0A",
     w: 130, h: 100, rotate: -2,
@@ -75,8 +74,8 @@ const shapes: Shape[] = [
   {
     id: "linkedin",
     name: "LinkedIn",
-    handle: "Eswar Aditya",
-    href: "https://linkedin.com/in/eswaraditya",
+    handle: "Yarlagadda Eswar Aditya",
+    href: "https://www.linkedin.com/in/yarlagaddaeswaraditya/",
     bg: "#8B5CF6", color: "#fff",
     w: 148, h: 90, rotate: 2,
     pos: { left: "41%", top: "58%" },
@@ -84,8 +83,8 @@ const shapes: Shape[] = [
   {
     id: "email",
     name: "Email",
-    handle: "eswaraditya.y@...",
-    href: "mailto:eswaraditya.y@gmail.com",
+    handle: "yeswaraditya3006@...",
+    href: "mailto:yeswaraditya3006@gmail.com",
     bg: "#5AC8FA", color: "#000",
     w: 130, h: 100, rotate: -1,
     pos: { right: "5%", top: "60%" },
@@ -95,8 +94,8 @@ const shapes: Shape[] = [
   {
     id: "behance",
     name: "Behance",
-    handle: "@eswaraditya",
-    href: "https://behance.net/eswaraditya",
+    handle: "@eswaradyarlaga",
+    href: "https://www.behance.net/eswaradyarlaga",
     bg: "#C6FF00", color: "#000",
     w: 122, h: 95, rotate: 3,
     pos: { left: "22%", top: "71%" },
@@ -104,7 +103,7 @@ const shapes: Shape[] = [
   {
     id: "discord",
     name: "Discord",
-    handle: "eswaraditya",
+    handle: "soon 😁",
     href: "https://discord.com/users/eswaraditya",
     bg: "#7C3AED", color: "#fff",
     circle: true,
@@ -114,8 +113,7 @@ const shapes: Shape[] = [
   {
     id: "dribbble",
     name: "Dribbble",
-    handle: "@eswaraditya",
-    href: "https://dribbble.com/eswaraditya",
+    handle: "soon 😁",
     bg: "#FF375F", color: "#fff",
     w: 135, h: 95, rotate: -3,
     pos: { right: "8%", top: "73%" },
@@ -134,66 +132,76 @@ const shapes: Shape[] = [
 
 // ─── Card component ──────────────────────────────────────────────────────────
 function ShapeCard({ s }: { s: Shape }) {
+  const inner = (
+    <div
+      className="w-full h-full flex flex-col justify-end p-2.5 transition-transform duration-200 group-hover:scale-105 overflow-hidden"
+      style={{
+        backgroundColor: s.bg,
+        borderRadius: s.circle ? "50%" : "4px",
+        position: "relative",
+      }}
+    >
+      {/* Accent dot */}
+      {s.dot && (
+        <div
+          className="absolute top-2 left-2 w-5 h-5 rounded-full"
+          style={{ backgroundColor: s.dot }}
+        />
+      )}
+
+      {/* Text — hidden on circle, visible on rect */}
+      {!s.circle && (
+        <>
+          <span
+            className="font-bold text-[11px] leading-none uppercase tracking-widest"
+            style={{ color: s.color }}
+          >
+            {s.name}
+          </span>
+          <span
+            className="font-mono text-[9px] opacity-70 mt-0.5 truncate"
+            style={{ color: s.color }}
+          >
+            {s.handle}
+          </span>
+        </>
+      )}
+
+      {/* Circle — show name */}
+      {s.circle && (
+        <div className="absolute inset-0 flex items-center justify-center">
+          <span
+            className="font-bold text-[11px] uppercase tracking-wider text-center leading-tight px-1"
+            style={{ color: s.color }}
+          >
+            {s.name}
+          </span>
+        </div>
+      )}
+    </div>
+  );
+
+  const cardStyle: React.CSSProperties = {
+    ...s.pos,
+    width: s.w,
+    height: s.h,
+    transform: `rotate(${s.rotate}deg)`,
+    transformOrigin: "center center",
+  };
+
+  if (!s.href) {
+    return <div className="social-card absolute group" style={cardStyle}>{inner}</div>;
+  }
+
   return (
     <a
       href={s.href}
       target={s.href.startsWith("mailto") ? undefined : "_blank"}
       rel="noopener noreferrer"
       className="social-card absolute group"
-      style={{
-        ...s.pos,
-        width: s.w,
-        height: s.h,
-        transform: `rotate(${s.rotate}deg)`,
-        transformOrigin: "center center",
-      }}
+      style={cardStyle}
     >
-      <div
-        className="w-full h-full flex flex-col justify-end p-2.5 transition-transform duration-200 group-hover:scale-105 overflow-hidden"
-        style={{
-          backgroundColor: s.bg,
-          borderRadius: s.circle ? "50%" : "4px",
-          position: "relative",
-        }}
-      >
-        {/* Accent dot */}
-        {s.dot && (
-          <div
-            className="absolute top-2 left-2 w-5 h-5 rounded-full"
-            style={{ backgroundColor: s.dot }}
-          />
-        )}
-
-        {/* Text — hidden on circle, visible on rect */}
-        {!s.circle && (
-          <>
-            <span
-              className="font-bold text-[11px] leading-none uppercase tracking-widest"
-              style={{ color: s.color }}
-            >
-              {s.name}
-            </span>
-            <span
-              className="font-mono text-[9px] opacity-70 mt-0.5 truncate"
-              style={{ color: s.color }}
-            >
-              {s.handle}
-            </span>
-          </>
-        )}
-
-        {/* Circle — show name */}
-        {s.circle && (
-          <div className="absolute inset-0 flex items-center justify-center">
-            <span
-              className="font-bold text-[11px] uppercase tracking-wider text-center leading-tight px-1"
-              style={{ color: s.color }}
-            >
-              {s.name}
-            </span>
-          </div>
-        )}
-      </div>
+      {inner}
     </a>
   );
 }

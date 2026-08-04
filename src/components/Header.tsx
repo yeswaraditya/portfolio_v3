@@ -50,7 +50,7 @@ export default function Header() {
         <div className="flex flex-row items-center space-x-8 md:space-x-24">
            <Link href="/skills" className="hover:text-accent-orange transition-colors inline-block whitespace-nowrap">{translate("skills")}</Link>
            <Link href="/passion-projects" className="hover:text-accent-orange transition-colors inline-block whitespace-nowrap">{translate("passionProjects")}</Link>
-           <Link href="/reply" className="hover:text-accent-orange transition-colors hidden md:inline-block whitespace-nowrap">{translate("replyTime")}</Link>
+           <Link href="/coffee" className="hover:text-accent-orange transition-colors hidden md:inline-block whitespace-nowrap">{translate("replyTime")}</Link>
         </div>
       </div>
     </header>

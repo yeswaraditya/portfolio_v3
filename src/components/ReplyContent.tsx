@@ -99,25 +99,25 @@ export default function ReplyContent() {
             </p>
 
             <a
-              href="mailto:eswaraditya.y@gmail.com"
+              href="mailto:yeswaraditya3006@gmail.com"
               className="reply-element group flex items-center gap-4 py-6 border-b border-gray-300 hover:border-accent-orange transition-colors"
             >
               <Mail size={20} className="opacity-60 group-hover:opacity-100 transition-opacity" />
               <span className="text-lg md:text-2xl font-medium tracking-tight group-hover:text-accent-orange transition-colors">
-                eswaraditya.y@gmail.com
+                yeswaraditya3006@gmail.com
               </span>
               <ArrowUpRight size={16} className="ml-auto opacity-0 group-hover:opacity-100 transition-opacity" />
             </a>
 
             <a
-              href="https://t.me/eswaraditya"
+              href="https://t.me/YarlagaddaEswar"
               target="_blank"
               rel="noopener noreferrer"
               className="reply-element group flex items-center gap-4 py-6 border-b border-gray-300 hover:border-accent-orange transition-colors"
             >
               <Send size={20} className="opacity-60 group-hover:opacity-100 transition-opacity" />
               <span className="text-lg md:text-2xl font-medium tracking-tight group-hover:text-accent-orange transition-colors">
-                Telegram @eswaraditya
+                Telegram @YarlagaddaEswar
               </span>
               <ArrowUpRight size={16} className="ml-auto opacity-0 group-hover:opacity-100 transition-opacity" />
             </a>
@@ -139,7 +139,7 @@ export default function ReplyContent() {
 
             <div className="flex flex-col gap-4">
               <a
-                href="https://github.com/eswaraditya"
+                href="https://github.com/yeswaraditya"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="reply-element group flex items-center gap-4 p-4 border border-gray-300 hover:border-black hover:bg-white transition-all"
@@ -147,13 +147,13 @@ export default function ReplyContent() {
                 <Github size={22} />
                 <div className="flex flex-col">
                   <span className="font-medium text-sm md:text-base">GitHub</span>
-                  <span className="font-mono text-[10px] opacity-50">@eswaraditya</span>
+                  <span className="font-mono text-[10px] opacity-50">@yeswaraditya</span>
                 </div>
                 <ArrowUpRight size={14} className="ml-auto opacity-0 group-hover:opacity-100 transition-opacity" />
               </a>
 
               <a
-                href="https://linkedin.com/in/eswaraditya"
+                href="https://www.linkedin.com/in/yarlagaddaeswaraditya/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="reply-element group flex items-center gap-4 p-4 border border-gray-300 hover:border-black hover:bg-white transition-all"
@@ -161,7 +161,7 @@ export default function ReplyContent() {
                 <Linkedin size={22} />
                 <div className="flex flex-col">
                   <span className="font-medium text-sm md:text-base">LinkedIn</span>
-                  <span className="font-mono text-[10px] opacity-50">Eswar Aditya</span>
+                  <span className="font-mono text-[10px] opacity-50">Yarlagadda Eswar Aditya</span>
                 </div>
                 <ArrowUpRight size={14} className="ml-auto opacity-0 group-hover:opacity-100 transition-opacity" />
               </a>
