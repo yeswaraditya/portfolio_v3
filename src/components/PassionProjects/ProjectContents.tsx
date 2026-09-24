@@ -1,23 +1,26 @@
 "use client";
 
 import { useState } from "react";
-
-export const CaseStudiesContent = () => (
-  <div className="p-12 text-center border-t border-black">
-    <h3 className="text-3xl font-bold mb-4">Case Studies</h3>
-    <p className="text-gray-600">Deep dives into my UX design process and problem solving.</p>
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
-        {[1, 2].map((i) => (
-            <div key={i} className="aspect-video bg-[#E0E0E0] border border-black rounded-sm flex items-center justify-center font-mono text-sm">
-                Project {i} Placeholder
-            </div>
-        ))}
-    </div>
-  </div>
-);
-
 import Image from "next/image";
 import { Download } from "lucide-react";
+import { useLanguage } from "@/context/LanguageContext";
+
+export const CaseStudiesContent = () => {
+  const { translate } = useLanguage();
+  return (
+    <div className="p-12 text-center border-t border-black">
+      <h3 className="text-3xl font-bold mb-4">{translate("pjCaseStudies")}</h3>
+      <p className="text-gray-600">{translate("pjCaseDesc")}</p>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
+        {[1, 2].map((i) => (
+          <div key={i} className="aspect-video bg-[#E0E0E0] border border-black rounded-sm flex items-center justify-center font-mono text-sm">
+            {translate("pjPlaceholder", { n: i })}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
 
 export const WallpapersContent = () => {
   const [downloads, setDownloads] = useState<Record<number, number>>({
@@ -26,6 +29,7 @@ export const WallpapersContent = () => {
     3: 890,
     4: 231
   });
+  const { translate } = useLanguage();
 
   const handleDownload = (id: number, packName: string) => {
     // Increment fake counter
@@ -87,12 +91,12 @@ export const WallpapersContent = () => {
             <div className="pt-6 pb-2 px-1 flex items-center justify-between">
               <div className="flex flex-col">
                 <span className="font-mono text-sm md:text-base font-bold text-black">{pack.title}</span>
-                <span className="font-mono text-xs text-gray-500 mt-1">{downloads[pack.id].toLocaleString()} downloads</span>
+                <span className="font-mono text-xs text-gray-500 mt-1">{downloads[pack.id].toLocaleString()} {translate("pjDownloads")}</span>
               </div>
               <button 
                 onClick={() => handleDownload(pack.id, pack.folder)}
                 className="flex items-center justify-center p-2 rounded-full hover:bg-black/10 transition-colors border-2 border-transparent hover:border-black/20"
-                title="Download pack"
+                title={translate("pjDownloadPack")}
               >
                 <Download size={20} className="text-black" />
               </button>
@@ -104,58 +108,82 @@ export const WallpapersContent = () => {
   );
 };
 
-export const FigmaCommunityContent = () => (
-  <div className="p-12 text-center border-t border-black">
-    <h3 className="text-3xl font-bold mb-4">Figma Community</h3>
-    <p className="text-gray-600">Resources, plugins, and UI kits shared with the community.</p>
-  </div>
-);
+export const FigmaCommunityContent = () => {
+  const { translate } = useLanguage();
+  return (
+    <div className="p-12 text-center border-t border-black">
+      <h3 className="text-3xl font-bold mb-4">{translate("pjFigmaCommunity")}</h3>
+      <p className="text-gray-600">{translate("pjFigmaDesc")}</p>
+    </div>
+  );
+};
 
-export const IOSDevelopmentContent = () => (
-  <div className="p-12 text-center border-t border-black">
-    <h3 className="text-3xl font-bold mb-4">iOS Development</h3>
-    <p className="text-gray-600">Native iOS apps built with Swift and SwiftUI.</p>
-  </div>
-);
+export const IOSDevelopmentContent = () => {
+  const { translate } = useLanguage();
+  return (
+    <div className="p-12 text-center border-t border-black">
+      <h3 className="text-3xl font-bold mb-4">{translate("pjIosDev")}</h3>
+      <p className="text-gray-600">{translate("pjIosDesc")}</p>
+    </div>
+  );
+};
 
-export const CoursesContent = () => (
-  <div className="p-12 text-center border-t border-black">
-    <h3 className="text-3xl font-bold mb-4">Courses</h3>
-    <p className="text-gray-600">Educational content and tutorials I&apos;ve created.</p>
-  </div>
-);
+export const CoursesContent = () => {
+  const { translate } = useLanguage();
+  return (
+    <div className="p-12 text-center border-t border-black">
+      <h3 className="text-3xl font-bold mb-4">{translate("pjCourses")}</h3>
+      <p className="text-gray-600">{translate("pjCoursesDesc")}</p>
+    </div>
+  );
+};
 
-export const NotionTemplatesContent = () => (
-  <div className="p-12 text-center border-t border-black">
-    <h3 className="text-3xl font-bold mb-4">Notion Templates</h3>
-    <p className="text-gray-600">Productivity systems and templates for Notion.</p>
-  </div>
-);
+export const NotionTemplatesContent = () => {
+  const { translate } = useLanguage();
+  return (
+    <div className="p-12 text-center border-t border-black">
+      <h3 className="text-3xl font-bold mb-4">{translate("pjNotionTemplates")}</h3>
+      <p className="text-gray-600">{translate("pjNotionDesc")}</p>
+    </div>
+  );
+};
 
-export const GraphicDesignContent = () => (
-  <div className="p-12 text-center border-t border-black">
-    <h3 className="text-3xl font-bold mb-4">Graphic Design</h3>
-    <p className="text-gray-600">Branding, social media assets, and digital art.</p>
-  </div>
-);
+export const GraphicDesignContent = () => {
+  const { translate } = useLanguage();
+  return (
+    <div className="p-12 text-center border-t border-black">
+      <h3 className="text-3xl font-bold mb-4">{translate("pjGraphicDesign")}</h3>
+      <p className="text-gray-600">{translate("pjGraphicDesc")}</p>
+    </div>
+  );
+};
 
-export const StickersContent = () => (
-  <div className="p-12 text-center border-t border-black">
-    <h3 className="text-3xl font-bold mb-4">Stickers</h3>
-    <p className="text-gray-600">Fun and custom sticker packs for devs.</p>
-  </div>
-);
+export const StickersContent = () => {
+  const { translate } = useLanguage();
+  return (
+    <div className="p-12 text-center border-t border-black">
+      <h3 className="text-3xl font-bold mb-4">{translate("pjStickers")}</h3>
+      <p className="text-gray-600">{translate("pjStickersDesc")}</p>
+    </div>
+  );
+};
 
-export const ChromeExtensionsContent = () => (
-  <div className="p-12 text-center border-t border-black">
-    <h3 className="text-3xl font-bold mb-4">Chrome Extensions</h3>
-    <p className="text-gray-600">Tools to enhance your browsing experience.</p>
-  </div>
-);
+export const ChromeExtensionsContent = () => {
+  const { translate } = useLanguage();
+  return (
+    <div className="p-12 text-center border-t border-black">
+      <h3 className="text-3xl font-bold mb-4">{translate("pjChromeExtensions")}</h3>
+      <p className="text-gray-600">{translate("pjChromeDesc")}</p>
+    </div>
+  );
+};
 
-export const VSCodeExtensionsContent = () => (
-  <div className="p-12 text-center border-t border-black">
-    <h3 className="text-3xl font-bold mb-4">VSCode Extensions</h3>
-    <p className="text-gray-600">Themes and utilities for Visual Studio Code.</p>
-  </div>
-);
+export const VSCodeExtensionsContent = () => {
+  const { translate } = useLanguage();
+  return (
+    <div className="p-12 text-center border-t border-black">
+      <h3 className="text-3xl font-bold mb-4">{translate("pjVscodeExtensions")}</h3>
+      <p className="text-gray-600">{translate("pjVscodeDesc")}</p>
+    </div>
+  );
+};

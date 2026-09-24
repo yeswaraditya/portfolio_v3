@@ -5,6 +5,7 @@ import Image from "next/image";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useLanguage } from "../context/LanguageContext";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -56,6 +57,7 @@ function Photo({
 
 export default function WhoAmIContent() {
   const ref = useRef<HTMLDivElement>(null);
+  const { translate } = useLanguage();
 
   useGSAP(() => {
     gsap.from(".wai-title", {
@@ -88,31 +90,21 @@ export default function WhoAmIContent() {
         </div>
       </div>
 
-      {/* ── ROW 1 · baby photo | birth text | green dots ── */}
+      {/* ── ROW 1 · baby photo | green dots ── */}
       <div className="wai-block flex items-start justify-between px-6 md:px-16 mb-12 md:mb-16">
 
         {/* Left: baby */}
         <Photo src="/about/baby.jpg" alt="Day 1" w={220} h={220} rotate={-2} />
 
-        {/* Center: birth text */}
-        <p className="text-[10px] md:text-xs tracking-wide leading-relaxed mt-2 mx-4 max-w-[200px]">
-          I was born in Khammam,<br />Telangana on 15/06/2004
-        </p>
-
         {/* Right: green dots */}
         <GreenDots size={26} />
       </div>
 
-      {/* ── ROW 2 · green dots | birth text | suit photo | Day-2 label ── */}
+      {/* ── ROW 2 · green dots | suit photo ── */}
       <div className="wai-block flex items-start justify-between px-6 md:px-16 mb-14 md:mb-20">
 
         {/* Left: green dots */}
         <GreenDots size={30} />
-
-        {/* Center: text */}
-        <p className="text-[10px] md:text-xs tracking-wide leading-relaxed mx-4 max-w-[160px] mt-1">
-          I was born in Khammam,<br />Telangana on 15/06/2004
-        </p>
 
         {/* Right: suit photo */}
         <Photo src="/about/childhood-suit.jpg" alt="Childhood" w={200} h={285} rotate={1} />
@@ -160,13 +152,13 @@ export default function WhoAmIContent() {
         <div className="flex flex-col gap-1">
           <Photo src="/about/speaking.jpg" alt="Speaking at institute" w={210} h={280} rotate={-2} />
           <span className="text-[8px] uppercase tracking-widest text-black/40 max-w-[120px]">
-            Sri Siddhartha Institute
+            {translate("siddhartha")}
           </span>
         </div>
         <div className="flex flex-col gap-1 items-end">
           <Photo src="/about/figma-workshop-1.jpg" alt="Figma workshop" w={330} h={260} rotate={1} />
           <span className="text-[8px] uppercase tracking-widest text-black/40 text-right">
-            Figma &amp; UI Workshop
+            {translate("figmaWorkshop")}
           </span>
         </div>
       </div>
@@ -176,7 +168,7 @@ export default function WhoAmIContent() {
         <div className="flex flex-col gap-1">
           <Photo src="/about/notion-club.jpg" alt="Notion club" w={360} h={280} rotate={-1} objectFit="contain" />
           <span className="text-[8px] uppercase tracking-widest text-black/40">
-            Notion Campus Club
+            {translate("notionClub")}
           </span>
         </div>
         <GreenDots size={26} className="self-end mb-6" />
@@ -187,7 +179,7 @@ export default function WhoAmIContent() {
         <div className="flex flex-col gap-1 items-center">
           <Photo src="/about/google-dev.jpg" alt="Google Developer Groups" w={460} h={315} rotate={0} />
           <span className="text-[8px] uppercase tracking-widest text-black/40">
-            Google Developer Groups
+            {translate("googleDev")}
           </span>
         </div>
       </div>

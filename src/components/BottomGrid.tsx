@@ -6,6 +6,7 @@ import { useGSAP } from "@gsap/react";
 import { Play, Pause, SkipBack, SkipForward, Asterisk } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useMusic } from "@/context/MusicContext";
+import { useLanguage } from "../context/LanguageContext";
 
 export default function BottomGrid() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -14,6 +15,7 @@ export default function BottomGrid() {
   const overlayRef = useRef<HTMLDivElement>(null);
   const transitionTextRef = useRef<HTMLDivElement>(null);
 
+  const { translate } = useLanguage();
   const { isPlaying, currentTrackIndex, playlist, trackName, togglePlay, playNext, playPrev } = useMusic();
 
   useGSAP(() => {
@@ -55,7 +57,7 @@ export default function BottomGrid() {
 
         const textSpan = transitionTextRef.current.querySelector('span');
         if (textSpan) {
-            gsap.set(textSpan, { textContent: "WHO AM I \u2192", opacity: 1 });
+            gsap.set(textSpan, { textContent: `${translate("whoAmI")} \u2192`, opacity: 1 });
         }
 
         // Animate overlay circle
@@ -108,11 +110,11 @@ export default function BottomGrid() {
         ref={transitionTextRef} 
         className="fixed z-[9999] hidden pointer-events-none text-6xl md:text-8xl lg:text-9xl font-bold tracking-tighter text-black flex items-center justify-center whitespace-nowrap"
       >
-        <span>WHO AM I →</span>
+        <span>{translate("whoAmI")} →</span>
       </div>
 
       <section ref={containerRef} className="w-full flex flex-col bg-[#EEEEEE] border-t border-gray-300 text-black">
-        
+
         {/* Top Section */}
         <div className="flex flex-col lg:flex-row border-b border-gray-300">
             
@@ -122,7 +124,7 @@ export default function BottomGrid() {
                   onClick={handleWhoAmIClick}
                   className="text-6xl md:text-8xl lg:text-9xl font-bold tracking-tighter hover:text-accent-orange transition-colors cursor-pointer whitespace-nowrap group"
                 >
-                  <span className="group-hover:opacity-0 transition-opacity duration-300">WHO AM I <span className="align-middle ml-4">→</span></span>
+                  <span className="group-hover:opacity-0 transition-opacity duration-300">{translate("whoAmI")} <span className="align-middle ml-4">→</span></span>
                 </h2>
             </div>
 
@@ -153,7 +155,7 @@ export default function BottomGrid() {
                     <div className="flex flex-col items-end gap-0.5">
                         <div className="flex flex-col items-end mr-1 mb-1">
                             <span className="font-mono text-[9px] font-black opacity-40 uppercase tracking-widest leading-none">
-                                {isPlaying ? "Playing Track" : "Paused"}
+                                {isPlaying ? translate("playingTrack") : translate("paused")}
                             </span>
                             <span className="font-mono text-[11px] font-bold whitespace-nowrap overflow-hidden text-ellipsis max-w-[180px] mt-0.5">
                                 {trackName}
@@ -189,7 +191,7 @@ export default function BottomGrid() {
                   className="h-16 flex items-center justify-center p-4 cursor-pointer hover:bg-white transition-colors"
                   onClick={() => router.push("/coffee")}
                 >
-                    <span className="font-mono text-xs md:text-sm tracking-wider">Let&apos;s have a coffee together!</span>
+                    <span className="font-mono text-xs md:text-sm tracking-wider">{translate("coffeeButton")}</span>
                 </div>
             </div>
         </div>
@@ -197,9 +199,9 @@ export default function BottomGrid() {
         {/* Bottom Ticker */}
         <div className="w-full p-4 md:p-6 flex items-center justify-between overflow-hidden">
             <div className="text-xl md:text-4xl font-medium tracking-tight uppercase flex items-center gap-4 whitespace-nowrap">
-                <span>YOU ARE NOT LAZY</span>
+                <span>{translate("notLazy")}</span>
                 <div className="w-12 h-0.5 bg-black"></div>
-                <span>JUST CREATIVE</span>
+                <span>{translate("justCreative")}</span>
             </div>
             <Asterisk size={40} className="text-black animate-spin-slow flex-shrink-0" />
         </div>

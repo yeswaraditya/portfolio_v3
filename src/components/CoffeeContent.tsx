@@ -3,6 +3,7 @@
 import { useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import { useLanguage } from "../context/LanguageContext";
 
 // ─── Social shape definitions ────────────────────────────────────────────────
 interface Shape {
@@ -209,6 +210,7 @@ function ShapeCard({ s }: { s: Shape }) {
 // ─── Main content ─────────────────────────────────────────────────────────────
 export default function CoffeeContent() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const { translate } = useLanguage();
 
   useGSAP(() => {
     // Title words scatter-in from different directions
@@ -259,15 +261,13 @@ export default function CoffeeContent() {
         className="coffee-word absolute font-bold text-black select-none"
         style={{ left: "4%", top: "13%", fontSize: "clamp(28px, 5vw, 72px)", letterSpacing: "-0.03em" }}
       >
-        Let&apos;s
+        {translate("coffeeLets")}
       </span>
-
-      {/* "have" — top right */}
       <span
         className="coffee-word absolute font-bold text-black select-none"
         style={{ left: "62%", top: "15%", fontSize: "clamp(28px, 5vw, 72px)", letterSpacing: "-0.03em" }}
       >
-        have
+        {translate("coffeeHave")}
       </span>
 
       {/* "Coffee" — center-left, largest */}
@@ -275,7 +275,7 @@ export default function CoffeeContent() {
         className="coffee-word absolute font-bold text-black select-none"
         style={{ left: "16%", top: "26%", fontSize: "clamp(38px, 7vw, 96px)", letterSpacing: "-0.04em" }}
       >
-        Coffee
+        {translate("coffeeCoffee")}
       </span>
 
       {/* "together" — center-right */}
@@ -283,7 +283,7 @@ export default function CoffeeContent() {
         className="coffee-word absolute font-bold text-black select-none"
         style={{ right: "5%", top: "34%", fontSize: "clamp(22px, 3.5vw, 52px)", letterSpacing: "-0.03em" }}
       >
-        together
+        {translate("coffeeTogether")}
       </span>
 
       {/* ── Social shape cards ────────────────────────────────────────────── */}

@@ -1,262 +1,329 @@
 "use client";
 
-import { useRef, useState } from "react";
+import Image from "next/image";
+import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 
-const skillCategories = [
-  {
-    id: "designing",
-    name: "Designing",
-    color: "#4285F4",
-    skills: ["UI/UX Design", "Figma", "Typography", "Graphic Design", "Branding"],
-    pos: { top: "18%", left: "14%" },
-    floatDuration: 2.5,
-    floatDelay: 0,
-    enterFrom: -120,
-  },
-  {
-    id: "product",
-    name: "Product Management",
-    color: "#FF55FF",
-    skills: ["User Research", "Roadmapping", "Wireframing", "Prototyping"],
-    pos: { top: "36%", left: "43%" },
-    floatDuration: 3.0,
-    floatDelay: 0.5,
-    enterFrom: 80,
-  },
-  {
-    id: "ai",
-    name: "AI & Prompting",
-    color: "#6DE385",
-    skills: ["Prompt Engineering", "Claude / ChatGPT", "AI Workflows", "Cursor IDE"],
-    pos: { top: "20%", left: "74%" },
-    floatDuration: 2.8,
-    floatDelay: 0.8,
-    enterFrom: 120,
-  },
-  {
-    id: "development",
-    name: "Development",
-    color: "#FF7340",
-    skills: ["React / Next.js", "TypeScript", "Tailwind CSS", "HTML / CSS"],
-    pos: { top: "55%", left: "7%" },
-    floatDuration: 2.6,
-    floatDelay: 0.3,
-    enterFrom: -120,
-  },
-  {
-    id: "mobile",
-    name: "iOS / Mobile",
-    color: "#7C3AED",
-    skills: ["Swift", "SwiftUI", "Xcode", "App Store Connect"],
-    pos: { top: "66%", left: "71%" },
-    floatDuration: 3.2,
-    floatDelay: 1.1,
-    enterFrom: 120,
-  },
-  {
-    id: "tools",
-    name: "Tools & Productivity",
-    color: "#FFB300",
-    skills: ["Git / GitHub", "VS Code", "Notion", "Chrome DevTools"],
-    pos: { top: "79%", left: "33%" },
-    floatDuration: 2.9,
-    floatDelay: 0.6,
-    enterFrom: -80,
-  },
-];
+const ASSETS = {
+  marquee: "/skills-design/marquee.svg",
+  portrait: "/skills-design/portrait.svg",
+  halo: "/skills-design/halo.svg",
+  gradCap: "/skills-design/grad-cap.svg",
+  eyes: "/skills-design/eyes.svg",
+  peaceHand: "/skills-design/peace-hand.svg",
+  skilllessss: "/skills-design/skilllessss.svg",
+};
+
+function Squiggle({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 40 48" fill="none" className={className} aria-hidden>
+      <path
+        d="M8 6C14 14 10 22 18 28C26 34 22 40 30 44"
+        stroke="#FFE600"
+        strokeWidth="3.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M18 4C22 12 16 20 24 26"
+        stroke="#FFE600"
+        strokeWidth="3.5"
+        strokeLinecap="round"
+        opacity="0.85"
+      />
+    </svg>
+  );
+}
 
 export default function SkillsContent() {
-  const desktopRef = useRef<HTMLDivElement>(null);
-  const pillRefs = useRef<(HTMLButtonElement | null)[]>([]);
-  const centerRef = useRef<HTMLDivElement>(null);
-  const [activeId, setActiveId] = useState<string | null>(null);
+  const rootRef = useRef<HTMLDivElement>(null);
+  const stageRef = useRef<HTMLDivElement>(null);
 
-  const activeCat = skillCategories.find((c) => c.id === activeId);
+  useEffect(() => {
+    const html = document.documentElement;
+    const body = document.body;
+    const previousHtml = html.style.overflow;
+    const previousBody = body.style.overflow;
+    html.style.overflow = "hidden";
+    body.style.overflow = "hidden";
+    return () => {
+      html.style.overflow = previousHtml;
+      body.style.overflow = previousBody;
+    };
+  }, []);
 
   useGSAP(
     () => {
-      // Pill entrance: slide in from left or right based on position
-      pillRefs.current.forEach((pill, i) => {
-        if (!pill) return;
-        gsap.from(pill, {
-          x: skillCategories[i].enterFrom,
-          opacity: 0,
-          duration: 0.7,
-          ease: "power3.out",
-          delay: 0.3 + i * 0.1,
-        });
+      const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+
+      tl.from(".skills-marquee-wrap", {
+        opacity: 0,
+        x: 40,
+        duration: 0.9,
+      })
+        .from(
+          ".skills-halo",
+          {
+            scale: 0.7,
+            opacity: 0,
+            duration: 0.85,
+            ease: "back.out(1.4)",
+          },
+          "-=0.55"
+        )
+        .from(
+          ".skills-portrait",
+          {
+            y: 40,
+            opacity: 0,
+            scale: 0.94,
+            duration: 0.95,
+          },
+          "-=0.65"
+        )
+        .from(
+          ".skills-sticker",
+          {
+            scale: 0,
+            opacity: 0,
+            duration: 0.7,
+            stagger: 0.12,
+            ease: "back.out(2)",
+          },
+          "-=0.55"
+        )
+        .from(
+          ".skills-squiggle",
+          {
+            scale: 0,
+            opacity: 0,
+            duration: 0.45,
+            stagger: 0.08,
+            ease: "back.out(2.5)",
+          },
+          "-=0.4"
+        )
+        .from(
+          ".skills-title",
+          {
+            y: 24,
+            opacity: 0,
+            duration: 0.7,
+          },
+          "-=0.35"
+        );
+
+      gsap.to(".skills-sticker-cap", {
+        y: -12,
+        rotation: -6,
+        duration: 2.4,
+        ease: "sine.inOut",
+        yoyo: true,
+        repeat: -1,
       });
 
-      // Idle float animation (staggered out of phase)
-      pillRefs.current.forEach((pill, i) => {
-        if (!pill) return;
-        const cat = skillCategories[i];
-        gsap.to(pill, {
-          y: 10,
-          duration: cat.floatDuration,
-          ease: "sine.inOut",
-          yoyo: true,
-          repeat: -1,
-          delay: cat.floatDelay,
-        });
+      gsap.to(".skills-sticker-eyes", {
+        y: 10,
+        rotation: 5,
+        duration: 2.8,
+        ease: "sine.inOut",
+        yoyo: true,
+        repeat: -1,
+        delay: 0.35,
       });
 
-      // Center text entrance
-      if (centerRef.current) {
-        gsap.from(centerRef.current, {
-          opacity: 0,
-          scale: 0.95,
-          duration: 0.9,
-          ease: "power3.out",
-          delay: 0.9,
-        });
-      }
+      gsap.to(".skills-sticker-peace", {
+        y: -8,
+        rotation: -4,
+        duration: 3.1,
+        ease: "sine.inOut",
+        yoyo: true,
+        repeat: -1,
+        delay: 0.7,
+      });
+
+      gsap.to(".skills-halo", {
+        scale: 1.04,
+        duration: 3.2,
+        ease: "sine.inOut",
+        yoyo: true,
+        repeat: -1,
+      });
+
+      gsap.to(".skills-squiggle", {
+        y: "+=8",
+        rotation: "+=8",
+        duration: 2.2,
+        ease: "sine.inOut",
+        yoyo: true,
+        repeat: -1,
+        stagger: 0.25,
+      });
     },
-    { scope: desktopRef }
+    { scope: rootRef }
   );
 
-  const swapCenter = (nextId: string | null) => {
-    if (!centerRef.current) {
-      setActiveId(nextId);
-      return;
-    }
-    gsap.to(centerRef.current, {
-      opacity: 0,
-      y: -10,
-      duration: 0.18,
-      ease: "power2.in",
-      onComplete: () => {
-        setActiveId(nextId);
-        gsap.fromTo(
-          centerRef.current!,
-          { opacity: 0, y: 10 },
-          { opacity: 1, y: 0, duration: 0.35, ease: "power2.out" }
-        );
-      },
-    });
-  };
+  useGSAP(
+    () => {
+      const stage = stageRef.current;
+      if (!stage) return;
 
-  const handlePillClick = (id: string) => {
-    swapCenter(activeId === id ? null : id);
-  };
+      const layers = stage.querySelectorAll<HTMLElement>("[data-depth]");
+
+      const onMove = (event: MouseEvent) => {
+        const rect = stage.getBoundingClientRect();
+        const x = (event.clientX - rect.left) / rect.width - 0.5;
+        const y = (event.clientY - rect.top) / rect.height - 0.5;
+
+        layers.forEach((layer) => {
+          const depth = Number(layer.dataset.depth || 0);
+          gsap.to(layer, {
+            x: x * depth * 24,
+            y: y * depth * 14,
+            duration: 0.6,
+            ease: "power2.out",
+            overwrite: "auto",
+          });
+        });
+      };
+
+      const onLeave = () => {
+        layers.forEach((layer) => {
+          gsap.to(layer, {
+            x: 0,
+            y: 0,
+            duration: 0.8,
+            ease: "power3.out",
+          });
+        });
+      };
+
+      stage.addEventListener("mousemove", onMove);
+      stage.addEventListener("mouseleave", onLeave);
+
+      return () => {
+        stage.removeEventListener("mousemove", onMove);
+        stage.removeEventListener("mouseleave", onLeave);
+      };
+    },
+    { scope: rootRef }
+  );
 
   return (
-    <div className="w-full">
-      {/* ── Desktop: scattered floating layout ── */}
+    <div
+      ref={rootRef}
+      className="fixed inset-0 z-0 grid h-svh w-full grid-rows-[minmax(0,1fr)_auto] overflow-hidden text-white"
+      style={{
+        backgroundColor: "#0055FF",
+        backgroundImage:
+          "radial-gradient(circle, rgba(255,255,255,0.92) 1.1px, transparent 1.15px)",
+        backgroundSize: "14px 14px",
+      }}
+    >
       <div
-        ref={desktopRef}
-        className="hidden md:block relative w-full"
-        style={{ height: "calc(100vh - 160px)" }}
-        onClick={(e) => {
-          // Deselect when clicking empty background
-          if (e.target === e.currentTarget) swapCenter(null);
-        }}
+        ref={stageRef}
+        className="relative min-h-0 w-full"
       >
-        {/* Floating pills */}
-        {skillCategories.map((cat, i) => (
-          <button
-            key={cat.id}
-            ref={(el) => {
-              pillRefs.current[i] = el;
-            }}
-            onClick={() => handlePillClick(cat.id)}
-            className="absolute font-mono text-sm font-bold px-5 py-2.5 rounded-full hover:scale-105 active:scale-95 transition-transform shadow-sm z-10"
-            style={{
-              backgroundColor: cat.color,
-              top: cat.pos.top,
-              left: cat.pos.left,
-              outline:
-                activeId === cat.id ? `2px solid #000` : "2px solid transparent",
-              outlineOffset: "3px",
-            }}
-          >
-            {cat.name}
-          </button>
-        ))}
-
-        {/* Center: "Explore Skills" or skill list */}
-        <div className="absolute top-[52%] left-1/2 -translate-x-1/2 -translate-y-1/2 text-center pointer-events-none z-0 min-w-[260px]">
-          <div ref={centerRef}>
-            {!activeCat ? (
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-black tracking-tight">
-                Explore Skills
-              </h2>
-            ) : (
-              <div className="flex flex-col items-center gap-3">
-                <span
-                  className="font-mono text-xs font-bold px-4 py-1.5 rounded-full"
-                  style={{ backgroundColor: activeCat.color }}
-                >
-                  {activeCat.name}
-                </span>
-                <ul className="flex flex-col items-center gap-2 mt-1">
-                  {activeCat.skills.map((skill) => (
-                    <li
-                      key={skill}
-                      className="font-mono text-sm text-black/70"
-                    >
-                      {skill}
-                    </li>
-                  ))}
-                </ul>
-                <span className="font-mono text-[10px] text-black/30 tracking-widest mt-2 uppercase">
-                  click pill to close
-                </span>
-              </div>
-            )}
+        <div className="skills-marquee-wrap pointer-events-none absolute inset-x-0 top-[44%] z-10 -translate-y-1/2 overflow-hidden">
+          <div data-depth="0.35" className="flex w-max">
+            {[0, 1].map((copy) => (
+              <Image
+                key={copy}
+                src={ASSETS.marquee}
+                alt=""
+                width={1440}
+                height={346}
+                className="h-[18vw] min-h-[120px] max-h-[200px] w-auto shrink-0 md:h-[180px]"
+                priority={copy === 0}
+                aria-hidden={copy === 1}
+              />
+            ))}
           </div>
+        </div>
+
+        <div className="absolute inset-x-0 top-16 bottom-2 z-20 mx-auto w-[min(96vw,720px)] md:top-20">
+          <div
+            data-depth="0.55"
+            className="skills-halo absolute left-1/2 top-[0%] z-10 h-[78%] w-[95%] -translate-x-1/2"
+          >
+            <Image
+              src={ASSETS.halo}
+              alt=""
+              fill
+              className="object-contain object-center"
+              sizes="(max-width: 768px) 92vw, 640px"
+              priority
+            />
+          </div>
+
+          <div data-depth="0.9" className="skills-portrait absolute inset-0 z-20">
+            <Image
+              src={ASSETS.portrait}
+              alt="Portrait"
+              fill
+              className="object-contain object-bottom"
+              sizes="(max-width: 768px) 92vw, 640px"
+              priority
+            />
+          </div>
+
+          <div
+            data-depth="1.4"
+            className="skills-sticker skills-sticker-cap absolute left-[-4%] top-[1%] z-30 w-[36%] max-w-[230px] md:left-[-6%] md:w-[32%]"
+          >
+            <Image
+              src={ASSETS.gradCap}
+              alt=""
+              width={280}
+              height={340}
+              className="h-auto w-full rotate-[-10deg] drop-shadow-[0_8px_16px_rgba(0,0,0,0.25)]"
+              priority
+            />
+          </div>
+
+          <div
+            data-depth="1.5"
+            className="skills-sticker skills-sticker-eyes absolute right-[-3%] top-0 z-30 w-[30%] max-w-[190px] md:right-[-2%] md:w-[26%]"
+          >
+            <Image
+              src={ASSETS.eyes}
+              alt=""
+              width={220}
+              height={180}
+              className="h-auto w-full drop-shadow-[0_8px_16px_rgba(0,0,0,0.2)]"
+              priority
+            />
+          </div>
+
+          <div
+            data-depth="1.6"
+            className="skills-sticker skills-sticker-peace absolute right-[-8%] top-[34%] z-30 w-[34%] max-w-[220px] md:right-[-10%] md:top-[32%] md:w-[30%]"
+          >
+            <Image
+              src={ASSETS.peaceHand}
+              alt=""
+              width={260}
+              height={290}
+              className="h-auto w-full rotate-[8deg] drop-shadow-[0_8px_16px_rgba(0,0,0,0.22)]"
+              priority
+            />
+          </div>
+
+          <Squiggle className="skills-squiggle absolute left-[26%] top-[16%] z-25 h-10 w-8 md:h-12 md:w-10" />
+          <Squiggle className="skills-squiggle absolute right-[28%] top-[20%] z-25 h-9 w-7 rotate-25 md:h-11 md:w-9" />
         </div>
       </div>
 
-      {/* ── Mobile: stacked layout ── */}
-      <div className="md:hidden w-full px-6 pb-20">
-        <h1 className="text-5xl font-bold tracking-tighter mb-8 uppercase">
-          Skills
-        </h1>
-        <div className="flex flex-wrap gap-3 mb-8">
-          {skillCategories.map((cat) => (
-            <button
-              key={cat.id}
-              onClick={() =>
-                setActiveId(activeId === cat.id ? null : cat.id)
-              }
-              className="font-mono text-sm font-bold px-5 py-2.5 rounded-full active:scale-95 transition-transform"
-              style={{
-                backgroundColor: cat.color,
-                outline:
-                  activeId === cat.id
-                    ? "2px solid #000"
-                    : "2px solid transparent",
-                outlineOffset: "3px",
-              }}
-            >
-              {cat.name}
-            </button>
-          ))}
-        </div>
-
-        {activeCat && (
-          <div className="border border-gray-400 p-6">
-            <h3
-              className="font-mono text-xs font-bold uppercase tracking-widest mb-4"
-              style={{ color: activeCat.color }}
-            >
-              {activeCat.name}
-            </h3>
-            <ul className="flex flex-col gap-3">
-              {activeCat.skills.map((skill) => (
-                <li
-                  key={skill}
-                  className="font-mono text-sm border-b border-gray-200 pb-3 last:border-0 last:pb-0"
-                >
-                  {skill}
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
+      <div className="skills-title pointer-events-none z-40 flex justify-center px-4 pb-4 pt-1 md:pb-6">
+        <Image
+          src={ASSETS.skilllessss}
+          alt="SKILLLESSSS"
+          width={504}
+          height={80}
+          className="h-auto w-[min(72vw,420px)]"
+          priority
+        />
       </div>
     </div>
   );

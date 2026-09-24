@@ -4,10 +4,12 @@ import { useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { Mail, Send, Github, Linkedin, ArrowUpRight } from "lucide-react";
+import { useLanguage } from "../context/LanguageContext";
 
 export default function ReplyContent() {
   const containerRef = useRef<HTMLDivElement>(null);
   const clockRef = useRef<HTMLSpanElement>(null);
+  const { translate } = useLanguage();
 
   useGSAP(() => {
     // Staggered reveal of elements
@@ -58,10 +60,10 @@ export default function ReplyContent() {
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8">
           <div className="flex-1">
             <p className="reply-element font-mono text-[10px] md:text-sm uppercase tracking-widest opacity-60 mb-4">
-              Contact
+              {translate("replyContact")}
             </p>
             <h1 className="reply-element text-5xl md:text-7xl lg:text-9xl font-bold tracking-tighter leading-none">
-              REPLY YOU IN
+              {translate("replyTitle")}
             </h1>
             <div className="reply-element timer-pulse flex items-baseline gap-4 mt-2">
               <span
@@ -71,7 +73,7 @@ export default function ReplyContent() {
                 10:00
               </span>
               <span className="font-mono text-sm md:text-lg uppercase tracking-widest opacity-50">
-                min
+                {translate("replyMin")}
               </span>
             </div>
           </div>
@@ -81,7 +83,7 @@ export default function ReplyContent() {
             <div className="flex items-center gap-3">
               <div className="w-3 h-3 rounded-full bg-green-500 animate-pulse"></div>
               <span className="font-mono text-xs md:text-sm uppercase tracking-wider">
-                Available for work
+                {translate("replyAvailable")}
               </span>
             </div>
           </div>
@@ -95,7 +97,7 @@ export default function ReplyContent() {
         <div className="flex-1 border-b lg:border-b-0 lg:border-r border-gray-300 p-6 md:p-12 lg:p-16 flex flex-col justify-between">
           <div>
             <p className="reply-element font-mono text-[10px] md:text-xs uppercase tracking-widest opacity-50 mb-8">
-              Reach out directly
+              {translate("replyDirect")}
             </p>
 
             <a
@@ -124,7 +126,7 @@ export default function ReplyContent() {
           </div>
 
           <p className="reply-element font-mono text-[10px] md:text-xs uppercase tracking-widest opacity-40 mt-12">
-            I check messages obsessively. You&apos;ll hear back fast.
+            {translate("replyMessages")}
           </p>
         </div>
 
@@ -134,7 +136,7 @@ export default function ReplyContent() {
           {/* Socials */}
           <div className="flex-1 p-6 md:p-12 border-b border-gray-300">
             <p className="reply-element font-mono text-[10px] md:text-xs uppercase tracking-widest opacity-50 mb-8">
-              Find me elsewhere
+              {translate("replyElsewhere")}
             </p>
 
             <div className="flex flex-col gap-4">
@@ -171,13 +173,13 @@ export default function ReplyContent() {
           {/* Bottom note */}
           <div className="p-6 md:p-12 flex flex-col gap-4">
             <p className="reply-element font-mono text-[10px] md:text-xs uppercase tracking-widest opacity-50">
-              Based in
+              {translate("replyBasedIn")}
             </p>
             <p className="reply-element text-xl md:text-2xl font-bold tracking-tight">
-              Hyderabad, India
+              {translate("replyLocation")}
             </p>
             <p className="reply-element font-mono text-[10px] md:text-xs opacity-40 uppercase tracking-wider">
-              IST (UTC+5:30)
+              {translate("replyTimezone")}
             </p>
           </div>
         </div>

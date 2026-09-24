@@ -12,10 +12,14 @@ export default function Header() {
   const { translate } = useLanguage();
   const { isPlaying, togglePlay, trackName } = useMusic();
   const pathname = usePathname();
-  const isTransparent = pathname === "/who-am-i" || pathname === "/coffee";
+  const isSkills = pathname === "/skills";
+  const isTransparent =
+    pathname === "/who-am-i" || pathname === "/coffee" || isSkills;
+  const miniLabel = isPlaying ? translate("headerLive") : translate("headerMusic");
+  const ink = isSkills ? "text-white" : "text-black";
 
   return (
-    <header className={`fixed top-0 left-0 w-full z-50 px-6 py-6 md:px-12 text-black text-sm uppercase tracking-wide ${isTransparent ? "bg-transparent" : "bg-[#EEEEEE]"}`} style={{ fontFamily: "var(--font-roboto)" }}>
+    <header className={`fixed top-0 left-0 w-full z-50 px-6 py-6 md:px-12 ${ink} text-sm uppercase tracking-wide ${isTransparent ? "bg-transparent" : "bg-[#EEEEEE]"}`} style={{ fontFamily: "var(--font-roboto)" }}>
       <div className="flex flex-row items-center justify-between w-full h-full">
         {/* Logo & Music Toggle */}
         <div className="flex items-center gap-6">
@@ -32,16 +36,16 @@ export default function Header() {
             <div className="relative w-4 h-4 flex items-center justify-center">
               {isPlaying ? (
                 <div className="flex gap-[2px] items-end h-3">
-                  <div className="w-[2px] bg-black animate-[music-bar_0.8s_ease-in-out_infinite]"></div>
-                  <div className="w-[2px] bg-black animate-[music-bar_1.2s_ease-in-out_infinite]"></div>
-                  <div className="w-[2px] bg-black animate-[music-bar_0.9s_ease-in-out_infinite]"></div>
+                  <div className={`w-[2px] ${isSkills ? "bg-white" : "bg-black"} animate-[music-bar_0.8s_ease-in-out_infinite]`}></div>
+                  <div className={`w-[2px] ${isSkills ? "bg-white" : "bg-black"} animate-[music-bar_1.2s_ease-in-out_infinite]`}></div>
+                  <div className={`w-[2px] ${isSkills ? "bg-white" : "bg-black"} animate-[music-bar_0.9s_ease-in-out_infinite]`}></div>
                 </div>
               ) : (
-                <Play size={14} className="fill-black group-hover:scale-110 transition-transform" />
+                <Play size={14} className={`${isSkills ? "fill-white" : "fill-black"} group-hover:scale-110 transition-transform`} />
               )}
             </div>
             <span className="text-[10px] hidden sm:inline-block opacity-50 group-hover:opacity-100 transition-opacity">
-              {isPlaying ? "LIVE" : "MUSIC"}
+              {miniLabel}
             </span>
           </div>
         </div>

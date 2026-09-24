@@ -4,6 +4,7 @@ import { useState, useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useLanguage } from "@/context/LanguageContext";
 
 gsap.registerPlugin(ScrollTrigger);
 import {
@@ -47,17 +48,17 @@ const ComponentMap: Record<CategoryKey, React.ComponentType> = {
 };
 
 // Data for the grid items
-const categories: { name: CategoryKey; colorClass: string; hoverClass: string }[] = [
-  { name: "Case Studies", colorClass: "bg-[#4285F4]", hoverClass: "hover:bg-[#4285F4]" },
-  { name: "Wallpapers", colorClass: "bg-[#FDE047]", hoverClass: "hover:bg-[#FDE047]" },
-  { name: "Figma Community", colorClass: "bg-[#FF55FF]", hoverClass: "hover:bg-[#FF55FF]" },
-  { name: "Ios Development", colorClass: "bg-[#40E0D0]", hoverClass: "hover:bg-[#40E0D0]" },
-  { name: "Courses", colorClass: "bg-[#FF2453]", hoverClass: "hover:bg-[#FF2453]" },
-  { name: "Notion Templates", colorClass: "bg-[#FF7340]", hoverClass: "hover:bg-[#FF7340]" },
-  { name: "Graphic Design", colorClass: "bg-[#ADFF2F]", hoverClass: "hover:bg-[#ADFF2F]" },
-  { name: "Stickers", colorClass: "bg-[#FFB300]", hoverClass: "hover:bg-[#FFB300]" },
-  { name: "chrome extensions", colorClass: "bg-[#7C3AED]", hoverClass: "hover:bg-[#7C3AED]" },
-  { name: "vscode extensions", colorClass: "bg-[#6DE385]", hoverClass: "hover:bg-[#6DE385]" },
+const categories: { name: CategoryKey; tkey: string; colorClass: string; hoverClass: string }[] = [
+  { name: "Case Studies", tkey: "pjCaseStudies", colorClass: "bg-[#4285F4]", hoverClass: "hover:bg-[#4285F4]" },
+  { name: "Wallpapers", tkey: "pjWallpapers", colorClass: "bg-[#FDE047]", hoverClass: "hover:bg-[#FDE047]" },
+  { name: "Figma Community", tkey: "pjFigmaCommunity", colorClass: "bg-[#FF55FF]", hoverClass: "hover:bg-[#FF55FF]" },
+  { name: "Ios Development", tkey: "pjIosDev", colorClass: "bg-[#40E0D0]", hoverClass: "hover:bg-[#40E0D0]" },
+  { name: "Courses", tkey: "pjCourses", colorClass: "bg-[#FF2453]", hoverClass: "hover:bg-[#FF2453]" },
+  { name: "Notion Templates", tkey: "pjNotionTemplates", colorClass: "bg-[#FF7340]", hoverClass: "hover:bg-[#FF7340]" },
+  { name: "Graphic Design", tkey: "pjGraphicDesign", colorClass: "bg-[#ADFF2F]", hoverClass: "hover:bg-[#ADFF2F]" },
+  { name: "Stickers", tkey: "pjStickers", colorClass: "bg-[#FFB300]", hoverClass: "hover:bg-[#FFB300]" },
+  { name: "chrome extensions", tkey: "pjChromeExtensions", colorClass: "bg-[#7C3AED]", hoverClass: "hover:bg-[#7C3AED]" },
+  { name: "vscode extensions", tkey: "pjVscodeExtensions", colorClass: "bg-[#6DE385]", hoverClass: "hover:bg-[#6DE385]" },
 ];
 
 export default function ProjectGrid() {
@@ -65,6 +66,7 @@ export default function ProjectGrid() {
   const containerRef = useRef<HTMLDivElement>(null);
   const gridRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
+  const { translate } = useLanguage();
 
   const ActiveComponent = ComponentMap[activeCategory];
 
@@ -122,7 +124,7 @@ export default function ProjectGrid() {
               >
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors" />
                 <span className="font-mono text-sm md:text-xs px-2 text-center z-10 w-full whitespace-normal md:whitespace-nowrap overflow-hidden text-ellipsis">
-                  {cat.name}
+                  {translate(cat.tkey)}
                 </span>
               </a>
             );
@@ -136,7 +138,7 @@ export default function ProjectGrid() {
             >
             <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors" />
             <span className="font-mono text-sm md:text-xs px-2 text-center z-10 w-full whitespace-normal md:whitespace-nowrap overflow-hidden text-ellipsis">
-              {cat.name}
+              {translate(cat.tkey)}
             </span>
           </button>
           );

@@ -5,7 +5,7 @@ import { useLanguage } from "../context/LanguageContext";
 import { X } from "lucide-react";
 
 export default function LanguageModal() {
-  const { isModalOpen, closeModal, setLanguage } = useLanguage();
+  const { isModalOpen, closeModal, setLanguage, translate } = useLanguage();
 
   if (!isModalOpen) return null;
 
@@ -23,7 +23,7 @@ export default function LanguageModal() {
         
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b border-gray-200">
-          <h2 className="text-lg font-bold font-mono uppercase tracking-wide">Select Language</h2>
+          <h2 className="text-lg font-bold font-mono uppercase tracking-wide">{translate("selectLanguage")}</h2>
           <button 
             onClick={closeModal}
             className="p-1 hover:bg-gray-100 rounded-full transition-colors"
@@ -47,7 +47,7 @@ export default function LanguageModal() {
         </div>
 
         <div className="bg-gray-50 p-3 text-center text-xs text-gray-400 font-mono border-t border-gray-100">
-          Translates entire website instantly
+          {translate("translatesInstantly")}
         </div>
 
       </div>
