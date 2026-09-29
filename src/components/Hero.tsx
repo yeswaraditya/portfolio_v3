@@ -1,103 +1,99 @@
 "use client";
 
 import Image from "next/image";
-import React, { useRef } from "react";
+import { useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { useLanguage } from "../context/LanguageContext";
 
+function CropMark({ className }: { className: string }) {
+  return (
+    <span className={`pointer-events-none absolute z-20 h-3.5 w-3.5 ${className}`} aria-hidden>
+      <span className="absolute left-1/2 top-0 h-full w-px -translate-x-1/2 bg-black" />
+      <span className="absolute left-0 top-1/2 h-px w-full -translate-y-1/2 bg-black" />
+    </span>
+  );
+}
+
 export default function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const { translate, openModal } = useLanguage();
+  const { translate } = useLanguage();
 
   useGSAP(() => {
-    // Simple reveal animation for elements
     gsap.from(".hero-element", {
-      y: 50,
+      y: 28,
       opacity: 0,
-      duration: 1,
-      stagger: 0.2,
+      duration: 0.9,
+      stagger: 0.12,
       ease: "power3.out",
     });
 
-    // Violet leaves: Left to Right (Start at 0, Go to 100%)
-    gsap.to(".leaf-wrapper-violet", {
-      xPercent: 100,
-      duration: 1.5,
+    gsap.from(".leaf-wrapper-violet", {
+      xPercent: -100,
+      duration: 1.2,
       ease: "power3.inOut",
-      delay: 0.5,
+      delay: 0.35,
     });
 
-    // Pink leaves: Right to Left (Start at 100%, Go to 0)
     gsap.from(".leaf-wrapper-pink", {
       xPercent: 100,
-      duration: 1.5,
+      duration: 1.2,
       ease: "power3.inOut",
-      delay: 0.5,
+      delay: 0.35,
     });
   }, { scope: containerRef });
 
   return (
-    <section ref={containerRef} className="relative w-full flex-1 min-h-0 flex flex-col justify-center overflow-hidden">
-      
-      <div className="relative w-full h-full">
-        {/* 1. Pink Leaves Box (Left) */}
-        <div className="hero-element absolute top-[30%] left-[5%] w-[25vw] h-[8vw] min-w-[250px] min-h-[80px] border border-gray-400 bg-white flex">
-           <div className="leaf-wrapper-pink w-1/2 h-full relative overflow-hidden">
-             <Image src="/pink_leaves.png" alt="Pink leaves" fill className="object-cover" />
-           </div>
+    <section ref={containerRef} className="relative min-h-0 w-full flex-1 overflow-hidden">
+      <div className="hero-element absolute left-[3%] top-[28%] h-[88px] w-[min(30vw,360px)] border border-neutral-400 bg-white md:top-[30%] md:h-[104px]">
+        <div className="leaf-wrapper-pink relative h-full w-1/2 overflow-hidden">
+          <Image src="/pink_leaves.png" alt="" fill className="object-cover" />
         </div>
-
-        {/* 2. Purple Leaves Box (Center Top) */}
-        <div className="hero-element absolute top-[15%] left-[35%] w-[25vw] h-[8vw] min-w-[250px] min-h-[80px] border border-gray-400 bg-white flex">
-          <div className="leaf-wrapper-violet w-1/2 h-full relative overflow-hidden">
-             <Image src="/violet_leaves.png" alt="Violet leaves" fill className="object-cover" />
-           </div>
-        </div>
-
-        {/* 3. Black Box (Center) */}
-        <div className="hero-element absolute top-[70%] left-[50%] -translate-x-1/2 -translate-y-1/2 bg-black px-6 py-4 w-[25vw] min-w-[200px] z-20 shadow-xl flex flex-col justify-between">
-            <div className="text-accent-orange text-xs md:text-base font-mono flex justify-between w-full mb-4 md:mb-8 font-bold">
-                <span>{translate("humansDie")}</span>
-                <span>DIEEEE</span>
-            </div>
-            <div className="flex flex-col items-center justify-center">
-                <div className="text-accent-orange text-5xl md:text-8xl font-bold tracking-tighter leading-none">
-                    {translate("art")}
-                </div>
-                <div className="text-accent-orange text-sm md:text-xl font-mono mt-2 tracking-widest">
-                    {translate("artWont")}
-                </div>
-            </div>
-        </div>
-
-        {/* 4. Portrait Image (Right) */}
-        <div className="hero-element absolute top-[15%] right-[5%] w-[25vw] h-[35vw] max-w-[400px] max-h-[500px] border border-gray-400 z-10">
-            {/* Crosshairs */}
-            <div className="absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2 w-4 h-4 flex items-center justify-center text-black text-2xl font-light z-20">+</div>
-            <div className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 w-4 h-4 flex items-center justify-center text-black text-2xl font-light z-20">+</div>
-            <div className="absolute bottom-0 left-0 -translate-x-1/2 translate-y-1/2 w-4 h-4 flex items-center justify-center text-black text-2xl font-light z-20">+</div>
-            <div className="absolute bottom-0 right-0 translate-x-1/2 translate-y-1/2 w-4 h-4 flex items-center justify-center text-black text-2xl font-light z-20">+</div>
-
-            <div className="w-full h-full  relative overflow-hidden">
-                 {/* Placeholder for Profile Image */}
-                 <div className="absolute inset-0">
-                    <Image src="/potrait.png" alt="Profile" fill className="object-cover" /> 
-                 </div>
-            </div>
-        </div>
-
-        {/* 5. Translate Box (Bottom Left) */}
-        <div 
-          onClick={openModal}
-          className="hero-element absolute bottom-0 left-0 w-48 border-r border-t border-gray-400 p-3 bg-[#E0E0E0]/80 backdrop-blur-sm text-black z-30 cursor-pointer hover:bg-white/90 transition-colors"
-        >
-            <div className="text-[10px] uppercase font-bold text-gray-600 mb-1">{translate("translateHeading")}</div>
-            <div className="text-right text-2xl font-mono font-bold">あ乙</div>
-        </div>
-
       </div>
 
+      <div className="hero-element absolute left-[34%] top-[10%] flex h-[88px] w-[min(30vw,360px)] justify-end border border-neutral-400 bg-white md:top-[12%] md:h-[104px]">
+        <div className="leaf-wrapper-violet relative h-full w-1/2 overflow-hidden">
+          <Image src="/violet_leaves.png" alt="" fill className="object-cover" />
+        </div>
+      </div>
+
+      <div className="hero-element absolute left-[26%] top-[34%] z-20 w-[min(28vw,320px)] bg-black px-5 py-4 text-[#FF4D00] md:top-[36%] md:px-6 md:py-5">
+        <div
+          className="mb-5 flex justify-between text-[11px] font-bold md:mb-8 md:text-sm"
+          style={{ fontFamily: "var(--font-space-mono)" }}
+        >
+          <span>{translate("humansDie")}</span>
+          <span>DIEEEE</span>
+        </div>
+        <div className="text-center">
+          <div
+            className="text-5xl font-bold leading-none tracking-tighter md:text-7xl"
+            style={{ fontFamily: "var(--font-cabinet)" }}
+          >
+            {translate("art")}
+          </div>
+          <div
+            className="mt-1 text-sm font-bold tracking-[0.18em] md:text-lg"
+            style={{ fontFamily: "var(--font-space-mono)" }}
+          >
+            {translate("artWont")}
+          </div>
+        </div>
+      </div>
+
+      <div className="hero-element absolute right-[4%] top-[8%] aspect-square w-[min(28vw,300px)] border border-neutral-400 md:top-[6%]">
+        <CropMark className="-left-2 -top-2" />
+        <CropMark className="-right-2 -top-2" />
+        <CropMark className="-bottom-2 -left-2" />
+        <CropMark className="-bottom-2 -right-2" />
+        <Image
+          src="/potrait.png"
+          alt="Portrait"
+          fill
+          className="object-cover object-top"
+          priority
+        />
+      </div>
     </section>
   );
 }

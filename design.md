@@ -1,335 +1,201 @@
-# Design System & Language
+# Design System & Design Language — Portfolio v3
 
-## Color Palette
+## Executive Summary & Design Philosophy
 
-### Primary Colors
-- **Background**: `#EEEEEE` (Light Gray)
-  - Used for main page backgrounds and card backgrounds
-  - Creates a clean, minimal canvas
-- **Foreground/Text**: `#000000` (Pure Black)
-  - Primary text color for maximum contrast
-  - All standard typography uses this
-
-### Accent Colors
-- **Accent Orange**: `#FF6E00`
-  - Used for interactive hover states (links)
-  - Used in hero section text on black background
-  - Transition overlay color for page navigation
-  - Strong call-to-action color
-- **Accent Yellow**: `#FFD700` (Golden)
-  - Defined in theme but not heavily used currently
-  - Reserved for future highlights/accents
-
-### Secondary Colors
-- **Light Gray**: `#E0E0E0` / `#F0F0F0`
-  - Used for button backgrounds and subtle overlays
-  - Provides visual hierarchy without harsh contrast
-- **Gray Borders**: `#D0D0D0` / `var(--gray-400)`
-  - Used extensively for section dividers
-  - Creates structured grid-like layouts
+**Portfolio v3** is a high-contrast, expressive developer & designer portfolio built with **Next.js (App Router)**, **Tailwind CSS v4**, and **GSAP**. The design language combines **Brutalist Grid Structure** (visible 1px borders, high-contrast pure black on light gray canvas), **Expressive Display Typography** (Cabinet Grotesk + Space Mono), **Playful Retro Collage Framing** (rotated photos, hard drop shadows, acid green dot matrixes), and **Vibrant Pop Color Accents** (Electric Blue, Bright Orange-Red, Neon Yellow, Acid Green).
 
 ---
 
-## Typography
+## 1. Color Palette & Theming System
 
-### Font Families
-- **Sans Serif (Primary)**: Inter
-  - Used for all body text and headings
-  - Clean, modern, highly readable
-  - Weights: 400 (regular), 700 (bold)
+### 1.1 Base Palette (CSS Variables)
 
-- **Monospace (Secondary)**: Space Mono
-  - Used for UI labels, metadata, timestamps
-  - Available as CSS variable: `var(--font-space-mono)`
-  - Weights: 400, 700
-  - Conveys technical/code-like aesthetic
+| Token | CSS Variable | Hex Code | Usage |
+| :--- | :--- | :--- | :--- |
+| **Background** | `--background` | `#EEEEEE` | Main page canvas background, light gray base |
+| **Foreground** | `--foreground` | `#000000` | Pure Black primary typography, section borders |
+| **Accent Orange-Red** | `--accent-orange` | `#FF4D00` / `#FF6E00` | Primary hero text, transition overlay, about page nav |
+| **Accent Yellow** | `--accent-yellow` | `#FFD700` / `#FFE600` | Highlight tags, sticker accents, category headers |
+| **Light Card Gray** | — | `#F0F0F0` / `#E0E0E0` | Elevated card surfaces, muted placeholder boxes |
+| **Border Gray** | — | `border-neutral-300` / `border-black` | Visible layout grid dividers |
 
-### Typographic Hierarchy
+### 1.2 Page-Specific Theming
 
-#### Headings
-- **Hero Title**: `text-5xl md:text-8xl` - Bold, tracking-tighter
-  - Example: "ART" in hero section
-- **Section Heading**: `text-6xl md:text-8xl lg:text-9xl` - Bold, tracking-tighter
-  - Example: "WHO AM I", "UPDATES..."
-- **Smaller Heading**: `text-2xl md:text-4xl` - Medium weight
-- **Subheading**: `text-sm md:text-xl` - Regular weight, monospace
-  - Used for secondary text, "art won't save it"
-
-#### Body Text
-- **Standard**: `text-base` - Inter, regular weight
-- **Small**: `text-sm` - For secondary information
-- **Mono Labels**: `text-[10px] md:text-sm` - Space Mono, uppercase, tracking-widest
-
-### Text Styling
-- **Tracking**: Used extensively
-  - `tracking-tighter` (compressed) for impact headlines
-  - `tracking-wide` and `tracking-widest` for labels and metadata
-  - Creates sophisticated, readable typography
-- **Line Height**: Default for body text
-  - `leading-none` for compressed headlines (maximum impact)
-  - `leading-relaxed` for paragraphs
+* **Home (`/`)**: Neutral light gray canvas (`#EEEEEE`) with pure black boxes and signature orange highlights (`#FF4D00`).
+* **Who Am I (`/who-am-i`)**: Personal photo story wall with Acid Green (`#B4FF00`) 2x2 dot matrixes, rotated white photo frames with hard drop shadow (`shadow-[7px_7px_0_#111]`), and full-width orange navigation header.
+* **Skills (`/skills`)**: Electric Royal Blue (`#0055FF`) background with a white dot matrix grid overlay (`radial-gradient`), white/yellow floating sticker graphics, sticky blue blurred navigation header (`bg-[#0055FF]/90 backdrop-blur-md`), and high-contrast skills catalog cards with alternating vibrant headers (`#FFE600`, `#FF4D00`, `#3DFF8A`).
+* **Coffee (`/coffee`)**: Vibrant Cobalt Blue canvas (`#3F85FF`) featuring scattered typography and a rainbow collection of social card chips with unique brand backgrounds:
+  * **Instagram**: `#FF2D9F` (Magenta) \| **Twitter / X**: `#FF9F0A` (Orange)
+  * **Telegram**: `#34C759` (Green) \| **YouTube**: `#FF3B30` (Red)
+  * **GitHub**: `#1C1C1E` (Dark Slate) \| **LinkedIn**: `#8B5CF6` (Purple)
+  * **Email**: `#5AC8FA` (Sky Blue) \| **Behance**: `#C6FF00` (Lime)
+  * **Discord**: `#7C3AED` (Violet) \| **Dribbble**: `#FF375F` (Pink)
+  * **Figma**: `#FF7262` (Coral Red)
+* **Passion Projects (`/passion-projects`)**: Filter grid with distinct category color themes:
+  * **Case Studies**: `#4285F4` (Google Blue) \| **Wallpapers**: `#FDE047` (Bright Yellow)
+  * **Figma Community**: `#FF55FF` (Neon Pink) \| **iOS Development**: `#40E0D0` (Turquoise)
+  * **Courses**: `#FF2453` (Crimson) \| **Notion Templates**: `#FF7340` (Burnt Orange)
+  * **Graphic Design**: `#ADFF2F` (Green-Yellow) \| **Stickers**: `#FFB300` (Amber)
+  * **Chrome Extensions**: `#7C3AED` (Deep Purple) \| **VSCode Extensions**: `#6DE385` (Mint)
 
 ---
 
-## Layout & Spacing
+## 2. Typography System
 
-### Grid System
-- Border-based layout (not CSS Grid)
-- Boxes defined by visible borders: `border border-gray-400`
-- Creates structured, scannable layouts
-- Responsive by collapsing borders and reorganizing on smaller screens
+The application uses a strict 4-font typography hierarchy configured in Next.js `layout.tsx` and mapped via `@theme inline` in `globals.css`:
 
-### Section Structure
-- **Hero Section**: Absolute positioned boxes with overlapping layouts
-  - Portrait with precise corner crosshairs (+)
-  - Leaf animation boxes (pink left, violet top-center)
-  - Black content box (center) with orange text
-  - Language toggle box (bottom-left)
+```css
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-accent-orange: var(--accent-orange);
+  --color-accent-yellow: var(--accent-yellow);
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-space-mono);
+  --font-roboto: var(--font-roboto);
+  --font-cabinet: var(--font-cabinet);
+}
+```
 
-- **Bottom Grid**: Flex-based with border dividers
-  - "WHO AM I" section (left, full-width on mobile)
-  - Playlist widget and coffee section (right column, hidden on mobile)
-  - Bottom ticker with motivational text
+### 2.1 Font Roles
 
-- **Updates Section**: Alternating left/right blocks
-  - Update blocks with image and text
-  - Staggered, scroll-triggered reveals
-  - Max-width constraints for readability
+1. **Cabinet Grotesk (`var(--font-cabinet)`)** — *Display Headline Font*
+   * Local font weights: 400 (Regular), 700 (Bold).
+   * Used for ultra-bold impact titles, hero headlines (`"ART"`), section headers (`"WHO AM I"`, `"Skill set."`, `"UPDATES..."`), and footer marquee text (`"YOU ARE NOT LAZY JUST CREATIVE"`).
+   * Styling: Tight letter spacing (`tracking-[-0.05em]`), ultra-compressed leading (`leading-[0.82]`).
 
-### Spacing Conventions
-- **Padding**: `p-4 md:p-8 lg:p-12` (responsive scaling)
-- **Gap**: `gap-6`, `gap-8`, `gap-32` (semantic vertical spacing)
-- **Margins**: Minimal explicit margins; relies on padding and gaps
+2. **Space Mono (`var(--font-space-mono)`)** — *Technical Mono Label Font*
+   * Google Font weights: 400, 700.
+   * Used for technical badges, micro-labels (`"HUMANS DIE"`, `"art won't save it"`), countdown timers, metadata timestamps (`"15 / 06 / 2004"`), and button tags.
+   * Styling: Uppercase, wide tracking (`tracking-[0.18em]` / `tracking-widest`).
 
----
+3. **Roboto (`var(--font-roboto)`)** — *Navigation & Caption Font*
+   * Local font weights: 300 (Light), 400 (Regular), 700 (Bold), 900 (Black).
+   * Used for header menu links (`"SKILLS"`, `"PASSION PROJECTS"`), image captions, and category tag badges.
 
-## Component Patterns
-
-### Boxes & Cards
-- Border: `1px solid border-gray-400`
-- Background: `bg-white` or `bg-[#F0F0F0]` (slight elevation)
-- Padding: `p-3` to `p-8` (context-dependent)
-- Used for: Leaf imagery, text blocks, playlist widget
-
-### Interactive Elements
-- **Hover State**: `hover:text-accent-orange transition-colors`
-- **Click State**: `active:scale-95` (slight compression)
-- **Scale Transform**: `hover:scale-110` for icons
-- **Transitions**: Smooth `transition-all duration-[time]`
-- **Cursor**: Custom finger cursor replaces default pointer
-
-### Buttons & Controls
-- **Black Button**: `bg-black rounded-full p-2` with white icon
-- **Icon Buttons**: No background, scale on hover
-- **Toggle States**: Visual feedback via color/opacity changes
-
-### Borders & Dividers
-- Horizontal: `border-t` or `border-b border-gray-300`
-- Vertical: `border-r` or `border-l border-gray-300`
-- Used to create visual hierarchy and section separation
-- Consistent line weight throughout
+4. **Inter (`var(--font-inter)`)** — *Primary Body Font*
+   * Google Font default sans font.
+   * Used for multi-paragraph body text, modal descriptions, and general UI text copy.
 
 ---
 
-## Animation & Motion
+## 3. Layout & Architectural Grid
 
-### Animation Framework
-- **Primary Tool**: GSAP (GreenSock Animation Platform)
-- **React Integration**: `@gsap/react` (useGSAP hook)
-- **Plugins**: ScrollTrigger for scroll-based animations
+### 3.1 Grid Structure
+* **Border Grid System**: Layout boundaries use explicit 1px solid neutral borders (`border border-neutral-300` or `border-black`), creating structured, scannable brutalist compartments.
+* **Crop Marks (`+` Crosshairs)**: Corners of key focal elements (e.g., Hero Portrait image) feature absolute-positioned 14px crosshair lines (`CropMark` component) extending outward from frame corners.
+* **Photo Frame Cards**: Photo items inside `/who-am-i` use white background containers with 8px padding (`p-2`), dark retro drop shadows (`shadow-[7px_7px_0_#111]`), and slight rotational angles (`rotate-[-2deg]`, `rotate-[1.5deg]`).
 
-### Motion Principles
-- **Ease Functions**: `power3.out`, `power3.inOut` (natural, bouncy feel)
-- **Duration**: Typically 0.8s - 1.5s for micro-interactions
-- **Delay**: Staggered reveals with 0.1s - 0.2s delays between items
-- **Opacity**: Fade in from 0 to 1
-- **Position**: Translate from bottom (y: 40-50) upward on reveal
-
-### Specific Animations
-
-#### Hero Section
-- **Initial Reveals**: Elements animate from bottom with fade-in
-  - `.hero-element`: `y: 50, opacity: 0` → `duration: 1, stagger: 0.2`
-- **Leaf Animations**: 
-  - Violet leaves slide left-to-right (xPercent: 0 → 100)
-  - Pink leaves slide right-to-left (xPercent: 100 → 0)
-  - Both: `duration: 1.5, ease: power3.inOut, delay: 0.5`
-
-#### Page Transitions
-- **Circle Reveal**: Circular clip-path animation
-  - Origin: Click position
-  - Expands outward to cover screen
-  - Background color: Accent orange
-  - Duration: ~1s
-- **Text Animation**: Text moves to center while fading, mid-way text swap
-- **Momentum**: Smooth, natural deceleration (power3.inOut)
-
-#### Scroll-Triggered Reveals
-- **Update Blocks**: Trigger when 85% in view
-  - Reveal from bottom with opacity fade
-  - Staggered by block index
-  - Duration: 0.8s with ease-out
-- **Lazy Loading**: Animations only fire when scrolled into view
-
-#### Music Visualizer
-- **Animated Bars**: `animation: music-bar 0.8s ease-in-out infinite`
-  - Multiple bars with different durations (0.8s, 1.2s, 0.9s)
-  - Height oscillates: 3px → 12px
-- **Spin Animation**: `animation: spin-slow 8s linear infinite`
-  - Used for asterisk icon in bottom ticker
-
-### Transition Classes
-- `transition-colors` - Color changes (1-3ms implied)
-- `transition-opacity` - Opacity changes
-- `transition-transform` - Scale and translate
-- `transition-all` - All properties (use judiciously)
+### 3.2 Visual Accent Elements
+* **Green Dot Matrix**: 2x2 grid of Acid Green (`#B4FF00`) square dots used as decorative accents on the Who Am I page.
+* **Dot Grid Pattern**: CSS radial-gradient background (`radial-gradient(circle, rgba(255,255,255,0.95) 1.15px, transparent 1.2px)`) at 18px grid spacing, providing texture for the Skills page.
+* **Leaf Animations**: Overlapping rectangular boxes on the hero page featuring pink and violet leaf imagery sliding in from opposite directions.
 
 ---
 
-## Interaction Patterns
+## 4. Animation Engine & Motion Principles
 
-### Hover States
-- **Links**: `hover:text-accent-orange` (color change)
-- **Buttons**: `hover:scale-110` (subtle grow)
-- **Cards**: `hover:bg-white` (background elevation)
-- **Opacity**: `hover:opacity-100` (reveal hidden text)
+Animations are powered by **GSAP (GreenSock Animation Platform)** with `@gsap/react` (`useGSAP` hook) and `ScrollTrigger`.
 
-### Click Interactions
-- **Scale Feedback**: `active:scale-95` (click compression)
-- **Page Navigation**: Circle reveal transition with text transform
-- **Toggle States**: Icon swap (play ↔ pause), opacity changes
+### 4.1 Key Animations & Micro-Interactions
 
-### Custom Cursor
-- **Element**: Finger image (`/finger.png`)
-- **Size**: 96px × 96px (w-24 h-24)
-- **Tracking**: GSAP smooth follow with 0.1s duration
-- **Override**: `cursor: none !important` on all elements
-- **Z-index**: `z-[999999]` (above everything)
-- **Offset**: Centered with `translate(-10%, -10%)`
+1. **Hero Reveal**:
+   * Staggered fade-in/up of `.hero-element` components (`y: 28, opacity: 0, duration: 0.9s, stagger: 0.12s, ease: power3.out`).
+   * Leaf image wrapper crops slide horizontally (`xPercent: -100` to `0`, `duration: 1.2s, ease: power3.inOut`).
 
-### Keyboard & Screen Reader
-- Semantic HTML structure maintained
-- ARIA considerations in navigation
-- Accessible color contrasts (black on light gray)
+2. **Circle Clip-Path Page Transition**:
+   * Clicking `"WHO AM I →"` on the home page triggers an expanding circular overlay (`clipPath: circle(0% at click_x click_y)` to `circle(150%)`).
+   * Background turns Accent Orange (`#FF6E00`), text animates from click position to screen center while swapping content (`"WHO AM I →"` to `"wHo aM ililililili"`).
 
----
+3. **Interactive Mouse Depth Parallax (Skills Poster)**:
+   * `stageRef` tracks real-time mouse coordinates relative to the container center.
+   * DOM elements with `data-depth` attributes translate along X/Y axes proportional to depth (`x: mouse_x * depth * 24`, `y: mouse_y * depth * 14`).
+   * Smooth reset on `mouseleave` with `power3.out`.
 
-## Visual Style Elements
+4. **Organic Floating Sine Movement**:
+   * Stickers on `/skills` (Grad Cap, Eyes, Peace Hand, Squiggle) and social cards on `/coffee` execute infinite gentle floating/rotation via GSAP (`yoyo: true, repeat: -1, ease: sine.inOut`).
 
-### Imagery
-- **Portrait**: Centered, bordered, with precise corner crosshairs
-- **Leaf Imagery**: Pink/violet leaves, crop-animated
-- **Organic Shapes**: Leaves provide softness against geometric structure
-- **Aspect Ratios**: 
-  - Portrait: `w-[25vw] h-[35vw]` (portrait orientation)
-  - Landscape: `w-[25vw] h-[8vw]` (wide, shallow boxes)
+5. **Contact Timer & Pulse**:
+   * Contact page (`/reply`) features a numeric GSAP counter tweening from `10:00` down to `0:00`, switching text to `"NOW"`, followed by infinite scaling pulse (`scale: 1.02`).
 
-### Borders & Frames
-- **Consistent Width**: 1px borders throughout
-- **Color**: Gray-400 (#999 range)
-- **Purpose**: Visual structure and scanning guides
-- **Crosshairs**: `+` symbols at four corners of portrait, offset outward
+6. **Music Visualizer Bars**:
+   * Header music toggle contains CSS animated equalizer bars oscillating between 3px and 12px (`animate-[music-bar_*]`).
 
-### Empty Space & Whitespace
-- **Large Gaps**: Strategic use of empty space for breathing room
-- **Padding**: Generous padding inside bordered elements
-- **Asymmetry**: Right-aligned heading "UPDATES...", left-aligned blocks below
-- **Visual Balance**: Content arranged to guide eye through page
-
-### Micro-Interactions
-- **Music Player Visualizer**: Dynamic bars responding to playback
-- **Playlist Grid**: 3-column grid of track indicators
-  - Active track: Glow effect (`shadow-[0_0_10px_rgba(37,99,235,0.4)]`)
-  - Inactive: Neutral gray
-- **Ticker Animation**: Asterisk spinning continuously
-- **Language Modal**: Dismissible with translation options
+7. **Spinning Ticker Asterisk**:
+   * Marquee sections feature an asterisk icon spinning continuously at 8s per revolution (`animate-spin-slow`).
 
 ---
 
-## Responsive Design
+## 5. Audio & Multi-Language Subsystems
 
-### Breakpoints (Tailwind)
-- **Mobile**: Default (no prefix)
-- **Tablet**: `md:` (768px+)
-- **Desktop**: `lg:` (1024px+)
+### 5.1 Global Music System (`MusicContext.tsx`)
+* Persistent background audio state managing playlist progression across routes.
+* Integrated audio tracks (from Epidemic Sound):
+  1. *Godspeed* — Zorro (Default Track)
+  2. *PRESSURE!* — Nyck Caution
+  3. *Not Gonna Wake Up* — Mindme
+  4. *Let Me Go* — Snake City
+  5. *Pretty* — Flux Vortex
+  6. *Kill These Butterflies* — Cospe
+* Audio player widget on the homepage bottom grid displays track navigation (Skip Prev/Next, Play/Pause) alongside 6 pill-shaped album art indicators containing grayscale childhood photos.
 
-### Responsive Adjustments
-- **Typography**: Scales with viewport (e.g., `text-5xl md:text-8xl`)
-- **Spacing**: Padding adjusts (e.g., `p-4 md:p-8`)
-- **Layout**: Columns collapse/reorganize
-  - Bottom grid: Full-width "WHO AM I" on mobile, split on desktop
-  - Updates: Maintains left/right alternation but adjusts spacing
-- **Images**: Use fixed aspect ratio containers with overflow hidden
-- **Navigation**: Links may hide on small screens (`hidden md:inline-block`)
+### 5.2 Multi-Language Context (`LanguageContext.tsx`)
+* Supports instant site-wide string translation across 5 languages:
+  * **English (`en`)** \| **Spanish (`es`)** \| **French (`fr`)** \| **Japanese (`ja`)** \| **Hindi (`hi`)**
+* Accessible modal dialog (`LanguageModal.tsx`) triggered via header or bottom grid `あ乙` button.
 
-### Mobile-First Philosophy
-- Base styles apply to mobile
-- Modifiers add complexity at larger breakpoints
-- Touch-friendly spacing and targets
-- Custom cursor hidden on touch devices (relies on system pointer)
-
----
-
-## Accessibility
-
-### Color Contrast
-- Black (#000) on Light Gray (#EEEEEE): 17.6:1 (AAA)
-- Orange (#FF6E00) on Black: 4.5:1 (AA, large text)
-- High readability throughout
-
-### Focus & Interaction
-- Hover states provide visual feedback
-- Links have clear hover color (orange)
-- Buttons have click feedback (scale)
-- Custom cursor indicates interactive elements
-
-### Semantic Structure
-- Proper heading hierarchy (h1, h2)
-- Landmark elements (header, main, footer, section)
-- Alt text on images
-- Language context provided
-
-### Motion
-- No forced animations on load (respects user preferences implicitly via CSS animations)
-- Scroll-triggered animations are optional enhancements
-- Animations use reasonable durations (not too fast, not too slow)
+### 5.3 Custom Cursor (`CustomCursor.tsx`)
+* Replaces browser pointer with custom finger cursor image (`/finger.png`, 96px x 96px, `z-[999999]`).
+* Positions tracked smoothly using GSAP `to` with short duration (0.1s).
 
 ---
 
-## Design Tokens Summary
+## 6. Route & Component Architecture
 
-| Token | Value | Usage |
-|-------|-------|-------|
-| `--background` | `#EEEEEE` | Page background |
-| `--foreground` | `#000000` | Text color |
-| `--accent-orange` | `#FF6E00` | Hover, accents |
-| `--accent-yellow` | `#FFD700` | Reserved |
-| `--font-sans` | Inter | Body text |
-| `--font-mono` | Space Mono | Labels |
-| Border Color | `#D0D0D0` | Dividers |
-| Light BG | `#F0F0F0` | Cards |
-| Animation Ease | `power3.out/inOut` | Smooth motion |
-| Custom Cursor | Finger image | Branding |
+```
+src/
+├── app/
+│   ├── layout.tsx             # Root layout: Fonts, Language & Music Providers, Cursor, Sound, Analytics
+│   ├── globals.css            # Tailwind directives, CSS variables, keyframe utility classes
+│   ├── page.tsx               # Home route: Header + Hero + BottomGrid
+│   ├── who-am-i/page.tsx      # About route: WhoAmIContent
+│   ├── skills/page.tsx        # Skills route: SkillsContent + SkillsCatalog
+│   ├── passion-projects/page.tsx # Projects route: ProjectGrid
+│   ├── coffee/page.tsx        # Social Canvas route: CoffeeContent
+│   ├── reply/page.tsx         # Contact route: ReplyContent
+│   └── flashback/page.tsx     # Archive route: FlashbackContent
+├── components/
+│   ├── Header.tsx             # Dynamic route-aware sticky navigation bar & music status
+│   ├── Hero.tsx               # Landing hero with leaf reveal & crop marks
+│   ├── BottomGrid.tsx         # 3-column bottom bar with translation, WHO AM I transition, music player, ticker
+│   ├── WhoAmIContent.tsx      # Photo story wall with rotated frames & dot matrixes
+│   ├── SkillsContent.tsx      # 3D parallax poster stage with floating stickers
+│   ├── SkillsCatalog.tsx      # 9-category detailed skill cards grid
+│   ├── CoffeeContent.tsx      # Interactive floating social cards canvas
+│   ├── ReplyContent.tsx       # Countdown contact page & social links
+│   ├── FlashbackContent.tsx   # Archive timeline component
+│   ├── CustomCursor.tsx       # GSAP-powered custom finger pointer
+│   ├── LanguageModal.tsx      # Language selector modal dialog
+│   ├── NavigationProgress.tsx # Top progress indicator bar
+│   ├── SoundEffects.tsx       # Interactive audio feedback engine
+│   └── PassionProjects/
+│       ├── ProjectGrid.tsx    # Category tab selector grid
+│       └── ProjectContents.tsx# Category content renderers & wallpaper download engine
+└── context/
+    ├── LanguageContext.tsx    # Global translation state (en, es, fr, ja, hi)
+    └── MusicContext.tsx       # Global audio playlist state controller
+```
 
 ---
 
-## Design Philosophy
+## 7. Summary of Design Tokens
 
-1. **Minimalism with Personality**: Clean light background with bold typography and custom elements
-2. **Grid Meets Organic**: Structured borders with organic leaf imagery
-3. **Technical Aesthetic**: Monospace fonts and precise alignment communicate competence
-4. **Motion as Polish**: Smooth, intentional animations enhance rather than distract
-5. **Interaction Matters**: Custom cursor and transitions make interface feel responsive and alive
-6. **Accessibility First**: High contrast, semantic HTML, clear navigation
-7. **Content Hierarchy**: Clear visual weight guides user attention
-8. **Responsive by Default**: Mobile-first approach ensures usability everywhere
-
----
-
-## Future Considerations
-
-- **Accent Yellow**: Underutilized; potential for highlight states or accent elements
-- **Dark Mode**: Design is light-centric; dark mode would require comprehensive palette rethink
-- **Animation Preferences**: Consider `prefers-reduced-motion` for accessibility
-- **Performance**: Monitor GSAP animations on lower-end devices
-- **Extended Palette**: Consider secondary grays or additional accent colors for feature expansion
+| Category | Token / Value | Application |
+| :--- | :--- | :--- |
+| **Fonts** | Cabinet Grotesk, Space Mono, Roboto, Inter | Display titles, Mono labels, Nav/Captions, Body text |
+| **Primary Colors** | `#EEEEEE` (BG), `#000000` (FG), `#FF4D00` (Orange) | Background, Text, Primary Accent |
+| **Secondary Accents** | `#FFE600` (Yellow), `#0055FF` (Blue), `#3F85FF` (Cobalt) | Skill poster, Stickers, Coffee canvas |
+| **Accent Green** | `#B4FF00` (Acid Green), `#3DFF8A` (Mint) | Dot matrixes, skill card highlights |
+| **Shadows** | `shadow-[7px_7px_0_#111]`, `shadow-[8px_8px_0_#001A66]` | Retro brutalist photo frames & skill cards |
+| **Borders** | `1px solid border-neutral-300` / `border-black` | Compartment dividers & section grid lines |
+| **Animations** | GSAP (`power3.out`, `power3.inOut`, `back.out(1.7)`) | Smooth, bouncy, high-polish transitions |

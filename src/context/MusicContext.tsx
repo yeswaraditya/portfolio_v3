@@ -15,8 +15,8 @@ interface MusicContextType {
 const MusicContext = createContext<MusicContextType | undefined>(undefined);
 
 export const playlist = [
-  "/music/ES_PRESSURE! - Nyck Caution-1.mp3",
   "/music/ES_Godspeed - Zorro-2.mp3",
+  "/music/ES_PRESSURE! - Nyck Caution-1.mp3",
   "/music/ES_Not Gonna Wake Up - Mindme-3.mp3",
   "/music/ES_Let Me Go - Snake City-4.mp3",
   "/music/ES_Pretty - Flux Vortex-5.mp3",

@@ -3,6 +3,7 @@
 import { useRef, useState, useEffect } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import Image from "next/image";
 import { Play, Pause, SkipBack, SkipForward, Asterisk } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useMusic } from "@/context/MusicContext";
@@ -15,8 +16,17 @@ export default function BottomGrid() {
   const overlayRef = useRef<HTMLDivElement>(null);
   const transitionTextRef = useRef<HTMLDivElement>(null);
 
-  const { translate } = useLanguage();
-  const { isPlaying, currentTrackIndex, playlist, trackName, togglePlay, playNext, playPrev } = useMusic();
+  const { translate, openModal } = useLanguage();
+
+  const pillFaces = [
+    "/about/childhood-face-1.jpg",
+    "/about/childhood-face-2.jpg",
+    "/about/speaking.jpg",
+    "/about/baby.jpg",
+    "/about/childhood-suit.jpg",
+    "/potrait.png",
+  ];
+  const { isPlaying, currentTrackIndex, playlist, togglePlay, playNext, playPrev } = useMusic();
 
   useGSAP(() => {
     // Reveal animation
@@ -113,99 +123,96 @@ export default function BottomGrid() {
         <span>{translate("whoAmI")} →</span>
       </div>
 
-      <section ref={containerRef} className="w-full flex flex-col bg-[#EEEEEE] border-t border-gray-300 text-black">
+      <section ref={containerRef} className="w-full border-t border-neutral-300 bg-[#EEEEEE] text-black">
+        <div className="grid border-b border-neutral-300 lg:grid-cols-[168px_minmax(0,1fr)_minmax(300px,420px)]">
+            <button
+              type="button"
+              onClick={openModal}
+              className="flex items-end justify-between gap-3 border-b border-neutral-300 px-3 py-3 text-left hover:bg-white lg:border-b-0 lg:border-r"
+            >
+                <span className="max-w-[9ch] text-[10px] font-bold uppercase leading-tight tracking-wide">
+                  {translate("translateHeading")}
+                </span>
+                <span className="font-mono text-xl font-bold leading-none">あ乙</span>
+            </button>
 
-        {/* Top Section */}
-        <div className="flex flex-col lg:flex-row border-b border-gray-300">
-            
-            {/* WHO AM I */}
-            <div className="flex-1 p-4 md:p-8 border-r border-gray-300 flex items-center">
-                <h2 
+            <div className="flex items-center border-b border-neutral-300 px-3 py-2 md:px-5 lg:border-b-0 lg:border-r">
+                <h2
                   onClick={handleWhoAmIClick}
-                  className="text-6xl md:text-8xl lg:text-9xl font-bold tracking-tighter hover:text-accent-orange transition-colors cursor-pointer whitespace-nowrap group"
+                  className="cursor-pointer whitespace-nowrap text-[clamp(2.6rem,6.4vw,6.4rem)] font-bold leading-[0.85] tracking-[-0.05em] transition-colors hover:text-accent-orange"
+                  style={{ fontFamily: "var(--font-cabinet)" }}
                 >
-                  <span className="group-hover:opacity-0 transition-opacity duration-300">{translate("whoAmI")} <span className="align-middle ml-4">→</span></span>
+                  {translate("whoAmI")} <span className="ml-2">→</span>
                 </h2>
             </div>
 
-            {/* Right Column */}
-            <div className="lg:w-[450px] flex flex-col flex-shrink-0">
-                {/* Playlist Widget */}
-                <div className="flex-1 p-4 border-b border-gray-300 flex items-center justify-between bg-[#F0F0F0]">
-                    {/* Playlist visualizer */}
+            <div className="flex flex-col">
+                <div className="flex items-center justify-between gap-4 border-b border-neutral-300 px-4 py-3">
                     <div className="grid grid-cols-3 gap-1.5">
                         {playlist.map((_, i) => (
-                            <div 
-                                key={i} 
-                                className={`w-8 h-4 rounded-full relative overflow-hidden transition-all duration-500 border border-black/5 ${
-                                    i === currentTrackIndex 
-                                    ? 'bg-blue-600 scale-110 shadow-[0_0_10px_rgba(37,99,235,0.4)]' 
-                                    : 'bg-gray-300'
+                            <div
+                                key={i}
+                                className={`relative h-5 w-10 overflow-hidden rounded-full bg-[#0055FF] ${
+                                    i === currentTrackIndex ? "ring-2 ring-black" : ""
                                 }`}
                             >
-                               {i === currentTrackIndex && isPlaying && (
-                                   <div className="absolute inset-0 bg-white/20 animate-pulse"></div>
-                               )}
-                               <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent pointer-events-none"></div>
+                               <Image
+                                 src={pillFaces[i] ?? "/potrait.png"}
+                                 alt=""
+                                 fill
+                                 className="object-cover grayscale"
+                               />
                             </div>
                         ))}
                     </div>
 
-                    {/* Controls */}
-                    <div className="flex flex-col items-end gap-0.5">
-                        <div className="flex flex-col items-end mr-1 mb-1">
-                            <span className="font-mono text-[9px] font-black opacity-40 uppercase tracking-widest leading-none">
-                                {isPlaying ? translate("playingTrack") : translate("paused")}
-                            </span>
-                            <span className="font-mono text-[11px] font-bold whitespace-nowrap overflow-hidden text-ellipsis max-w-[180px] mt-0.5">
-                                {trackName}
-                            </span>
-                        </div>
+                    <div className="h-10 w-px bg-neutral-300" />
+
+                    <div className="flex min-w-[132px] flex-col items-end gap-1">
+                        <span className="text-[13px]">My Latest Playlist</span>
                         <div className="flex items-center gap-3">
-                            <SkipBack 
-                                size={18} 
-                                className="fill-black cursor-pointer hover:scale-110 active:scale-95 transition-transform" 
+                            <SkipBack
+                                size={16}
+                                className="cursor-pointer fill-black"
                                 onClick={playPrev}
                             />
-                            <div 
-                                className="bg-black rounded-full p-2 cursor-pointer hover:scale-105 active:scale-95 transition-transform shadow-lg"
-                                onClick={togglePlay}
-                            >
+                            <button type="button" onClick={togglePlay} aria-label={isPlaying ? "Pause" : "Play"}>
                                 {isPlaying ? (
-                                    <Pause size={14} className="text-white fill-white" />
+                                    <Pause size={16} className="fill-black" />
                                 ) : (
-                                    <Play size={14} className="text-white fill-white ml-0.5" />
+                                    <Play size={16} className="fill-black" />
                                 )}
-                            </div>
-                            <SkipForward 
-                                size={18} 
-                                className="fill-black cursor-pointer hover:scale-110 active:scale-95 transition-transform" 
+                            </button>
+                            <SkipForward
+                                size={16}
+                                className="cursor-pointer fill-black"
                                 onClick={playNext}
                             />
                         </div>
                     </div>
                 </div>
 
-                {/* Coffee Section */}
-                <div
-                  className="h-16 flex items-center justify-center p-4 cursor-pointer hover:bg-white transition-colors"
+                <button
+                  type="button"
+                  className="flex h-14 items-center justify-center px-4 text-sm hover:bg-white"
                   onClick={() => router.push("/coffee")}
                 >
-                    <span className="font-mono text-xs md:text-sm tracking-wider">{translate("coffeeButton")}</span>
-                </div>
+                    {translate("coffeeButton")}
+                </button>
             </div>
         </div>
 
-        {/* Bottom Ticker */}
-        <div className="w-full p-4 md:p-6 flex items-center justify-between overflow-hidden">
-            <div className="text-xl md:text-4xl font-medium tracking-tight uppercase flex items-center gap-4 whitespace-nowrap">
+        <div className="flex items-center justify-between gap-4 overflow-hidden px-4 py-4 md:px-6">
+            <div
+              className="flex items-center gap-4 whitespace-nowrap text-[clamp(1.15rem,2.6vw,2.35rem)] font-bold uppercase tracking-[-0.03em]"
+              style={{ fontFamily: "var(--font-cabinet)" }}
+            >
                 <span>{translate("notLazy")}</span>
-                <div className="w-12 h-0.5 bg-black"></div>
+                <span className="inline-block h-[2px] w-14 bg-black" />
                 <span>{translate("justCreative")}</span>
             </div>
-            <Asterisk size={40} className="text-black animate-spin-slow flex-shrink-0" />
+            <Asterisk size={34} className="flex-shrink-0 animate-spin-slow text-black" />
         </div>
-
       </section>
     </>
   );

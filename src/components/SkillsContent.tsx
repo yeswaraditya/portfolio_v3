@@ -1,9 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import SkillsCatalog from "./SkillsCatalog";
 
 const ASSETS = {
   marquee: "/skills-design/marquee.svg",
@@ -12,7 +13,6 @@ const ASSETS = {
   gradCap: "/skills-design/grad-cap.svg",
   eyes: "/skills-design/eyes.svg",
   peaceHand: "/skills-design/peace-hand.svg",
-  skilllessss: "/skills-design/skilllessss.svg",
 };
 
 function Squiggle({ className }: { className?: string }) {
@@ -40,38 +40,14 @@ export default function SkillsContent() {
   const rootRef = useRef<HTMLDivElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const html = document.documentElement;
-    const body = document.body;
-    const previousHtml = html.style.overflow;
-    const previousBody = body.style.overflow;
-    html.style.overflow = "hidden";
-    body.style.overflow = "hidden";
-    return () => {
-      html.style.overflow = previousHtml;
-      body.style.overflow = previousBody;
-    };
-  }, []);
-
   useGSAP(
     () => {
       const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
 
       tl.from(".skills-marquee-wrap", {
         opacity: 0,
-        x: 40,
         duration: 0.9,
       })
-        .from(
-          ".skills-halo",
-          {
-            scale: 0.7,
-            opacity: 0,
-            duration: 0.85,
-            ease: "back.out(1.4)",
-          },
-          "-=0.55"
-        )
         .from(
           ".skills-portrait",
           {
@@ -103,15 +79,6 @@ export default function SkillsContent() {
             ease: "back.out(2.5)",
           },
           "-=0.4"
-        )
-        .from(
-          ".skills-title",
-          {
-            y: 24,
-            opacity: 0,
-            duration: 0.7,
-          },
-          "-=0.35"
         );
 
       gsap.to(".skills-sticker-cap", {
@@ -141,14 +108,6 @@ export default function SkillsContent() {
         yoyo: true,
         repeat: -1,
         delay: 0.7,
-      });
-
-      gsap.to(".skills-halo", {
-        scale: 1.04,
-        duration: 3.2,
-        ease: "sine.inOut",
-        yoyo: true,
-        repeat: -1,
       });
 
       gsap.to(".skills-squiggle", {
@@ -211,120 +170,102 @@ export default function SkillsContent() {
   );
 
   return (
+    <>
     <div
       ref={rootRef}
-      className="fixed inset-0 z-0 grid h-svh w-full grid-rows-[minmax(0,1fr)_auto] overflow-hidden text-white"
+      className="relative z-0 h-svh w-full overflow-hidden text-white"
       style={{
         backgroundColor: "#0055FF",
         backgroundImage:
-          "radial-gradient(circle, rgba(255,255,255,0.92) 1.1px, transparent 1.15px)",
-        backgroundSize: "14px 14px",
+          "radial-gradient(circle, rgba(255,255,255,0.95) 1.15px, transparent 1.2px)",
+        backgroundSize: "18px 18px",
       }}
     >
-      <div
-        ref={stageRef}
-        className="relative min-h-0 w-full"
-      >
-        <div className="skills-marquee-wrap pointer-events-none absolute inset-x-0 top-[44%] z-10 -translate-y-1/2 overflow-hidden">
-          <div data-depth="0.35" className="flex w-max">
-            {[0, 1].map((copy) => (
-              <Image
-                key={copy}
-                src={ASSETS.marquee}
-                alt=""
-                width={1440}
-                height={346}
-                className="h-[18vw] min-h-[120px] max-h-[200px] w-auto shrink-0 md:h-[180px]"
-                priority={copy === 0}
-                aria-hidden={copy === 1}
-              />
-            ))}
-          </div>
-        </div>
-
-        <div className="absolute inset-x-0 top-16 bottom-2 z-20 mx-auto w-[min(96vw,720px)] md:top-20">
-          <div
-            data-depth="0.55"
-            className="skills-halo absolute left-1/2 top-[0%] z-10 h-[78%] w-[95%] -translate-x-1/2"
-          >
+      <div ref={stageRef} className="absolute inset-0">
+        <div
+          data-depth="0.85"
+          className="skills-portrait pointer-events-none absolute bottom-[-2%] left-1/2 z-20 h-[92%] w-[min(62vw,760px)] -translate-x-1/2"
+        >
+          <div className="skills-halo absolute left-1/2 top-[-2%] z-0 w-[148%] -translate-x-1/2">
             <Image
               src={ASSETS.halo}
               alt=""
-              fill
-              className="object-contain object-center"
-              sizes="(max-width: 768px) 92vw, 640px"
+              width={1204}
+              height={830}
+              className="h-auto w-full"
               priority
             />
           </div>
+          <Image
+            src={ASSETS.portrait}
+            alt="Portrait"
+            fill
+            className="z-10 object-contain object-bottom"
+            sizes="(max-width: 768px) 88vw, 760px"
+            priority
+          />
+        </div>
 
-          <div data-depth="0.9" className="skills-portrait absolute inset-0 z-20">
-            <Image
-              src={ASSETS.portrait}
-              alt="Portrait"
-              fill
-              className="object-contain object-bottom"
-              sizes="(max-width: 768px) 92vw, 640px"
-              priority
-            />
-          </div>
+        <div
+          data-depth="1.35"
+          className="skills-sticker skills-sticker-cap pointer-events-none absolute left-[4%] top-[14%] z-30 w-[min(20vw,230px)] md:left-[7%] md:top-[16%]"
+        >
+          <Image
+            src={ASSETS.gradCap}
+            alt=""
+            width={473}
+            height={575}
+            className="h-auto w-full -rotate-6 drop-shadow-[0_10px_18px_rgba(0,0,0,0.22)]"
+            priority
+          />
+        </div>
 
-          <div
-            data-depth="1.4"
-            className="skills-sticker skills-sticker-cap absolute left-[-4%] top-[1%] z-30 w-[36%] max-w-[230px] md:left-[-6%] md:w-[32%]"
-          >
+        <div
+          data-depth="1.45"
+          className="skills-sticker skills-sticker-eyes pointer-events-none absolute right-[5%] top-[5%] z-30 w-[min(15vw,170px)] md:right-[8%] md:top-[7%]"
+        >
+          <Image
+            src={ASSETS.eyes}
+            alt=""
+            width={205}
+            height={209}
+            className="h-auto w-full drop-shadow-[0_8px_16px_rgba(0,0,0,0.18)]"
+            priority
+          />
+        </div>
+
+        <div
+          data-depth="1.55"
+          className="skills-sticker skills-sticker-peace pointer-events-none absolute right-[3%] bottom-[16%] z-30 w-[min(18vw,210px)] md:right-[6%] md:bottom-[18%]"
+        >
+          <Image
+            src={ASSETS.peaceHand}
+            alt=""
+            width={342}
+            height={376}
+            className="h-auto w-full rotate-6 drop-shadow-[0_10px_18px_rgba(0,0,0,0.2)]"
+            priority
+          />
+        </div>
+
+        <Squiggle className="skills-squiggle pointer-events-none absolute left-[27%] top-[34%] z-30 h-12 w-10 md:left-[30%] md:top-[36%] md:h-14 md:w-12" />
+        <Squiggle className="skills-squiggle pointer-events-none absolute right-[30%] top-[24%] z-30 h-11 w-9 rotate-12 md:right-[32%] md:top-[26%] md:h-14 md:w-11" />
+
+        <div className="skills-marquee-wrap pointer-events-none absolute inset-x-0 bottom-0 z-40 h-[17%] overflow-hidden">
+          <div className="flex w-max items-start">
             <Image
-              src={ASSETS.gradCap}
+              src={ASSETS.marquee}
               alt=""
-              width={280}
-              height={340}
-              className="h-auto w-full rotate-[-10deg] drop-shadow-[0_8px_16px_rgba(0,0,0,0.25)]"
+              width={1440}
+              height={346}
+              className="h-[58vh] w-auto max-w-none shrink-0"
               priority
             />
           </div>
-
-          <div
-            data-depth="1.5"
-            className="skills-sticker skills-sticker-eyes absolute right-[-3%] top-0 z-30 w-[30%] max-w-[190px] md:right-[-2%] md:w-[26%]"
-          >
-            <Image
-              src={ASSETS.eyes}
-              alt=""
-              width={220}
-              height={180}
-              className="h-auto w-full drop-shadow-[0_8px_16px_rgba(0,0,0,0.2)]"
-              priority
-            />
-          </div>
-
-          <div
-            data-depth="1.6"
-            className="skills-sticker skills-sticker-peace absolute right-[-8%] top-[34%] z-30 w-[34%] max-w-[220px] md:right-[-10%] md:top-[32%] md:w-[30%]"
-          >
-            <Image
-              src={ASSETS.peaceHand}
-              alt=""
-              width={260}
-              height={290}
-              className="h-auto w-full rotate-[8deg] drop-shadow-[0_8px_16px_rgba(0,0,0,0.22)]"
-              priority
-            />
-          </div>
-
-          <Squiggle className="skills-squiggle absolute left-[26%] top-[16%] z-25 h-10 w-8 md:h-12 md:w-10" />
-          <Squiggle className="skills-squiggle absolute right-[28%] top-[20%] z-25 h-9 w-7 rotate-25 md:h-11 md:w-9" />
         </div>
       </div>
-
-      <div className="skills-title pointer-events-none z-40 flex justify-center px-4 pb-4 pt-1 md:pb-6">
-        <Image
-          src={ASSETS.skilllessss}
-          alt="SKILLLESSSS"
-          width={504}
-          height={80}
-          className="h-auto w-[min(72vw,420px)]"
-          priority
-        />
-      </div>
     </div>
+    <SkillsCatalog />
+    </>
   );
 }

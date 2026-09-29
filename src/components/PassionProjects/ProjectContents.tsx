@@ -7,14 +7,86 @@ import { useLanguage } from "@/context/LanguageContext";
 
 export const CaseStudiesContent = () => {
   const { translate } = useLanguage();
+  const caseStudies = [
+    {
+      id: "upi-fraud",
+      title: "UPI Fraud Detection - ML System",
+      category: "Machine Learning & Security",
+      badge: "ML System",
+      color: "bg-[#0055FF]",
+      textColor: "text-white",
+      description:
+        "Built a machine learning based system designed to detect fraudulent UPI transactions by utilizing data preprocessing, feature engineering, and model evaluation techniques.",
+      tags: ["Python", "scikit-learn", "Pandas", "Feature Engineering", "ML Security"],
+    },
+    {
+      id: "customer-feedback-rag",
+      title: "Explainable Customer Feedback Analysis",
+      subtitle: "Graph-Based Orchestration & Emotion-Aware LLM Reasoning",
+      category: "AI Architecture & RAG",
+      badge: "AI RAG",
+      color: "bg-[#FF4D00]",
+      textColor: "text-white",
+      description:
+        "Developed an explainable conversational RAG system for customer feedback analysis using graph-based orchestration, hybrid vector–knowledge graph retrieval, emotion-aware query handling, and evidence-grounded responses.",
+      tags: ["Neo4j", "Qdrant", "Graph RAG", "LLM Reasoning", "Vector Search"],
+    },
+  ];
+
   return (
-    <div className="p-12 text-center border-t border-black">
-      <h3 className="text-3xl font-bold mb-4">{translate("pjCaseStudies")}</h3>
-      <p className="text-gray-600">{translate("pjCaseDesc")}</p>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
-        {[1, 2].map((i) => (
-          <div key={i} className="aspect-video bg-[#E0E0E0] border border-black rounded-sm flex items-center justify-center font-mono text-sm">
-            {translate("pjPlaceholder", { n: i })}
+    <div className="p-8 md:p-14 border-t border-black">
+      <div className="max-w-4xl mx-auto text-center">
+        <h3 className="text-3xl md:text-5xl font-bold uppercase tracking-[-0.04em]" style={{ fontFamily: "var(--font-cabinet)" }}>
+          {translate("pjCaseStudies")}
+        </h3>
+        <p className="text-gray-700 mt-2 text-base md:text-lg">
+          Detailed breakdown of machine learning models, RAG systems, and engineering architectures.
+        </p>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-10 max-w-5xl mx-auto">
+        {caseStudies.map((project) => (
+          <div
+            key={project.id}
+            className={`rounded-2xl border-2 border-black p-6 md:p-8 flex flex-col justify-between shadow-[7px_7px_0_#000] ${project.color} ${project.textColor}`}
+          >
+            <div>
+              <div className="flex items-center justify-between gap-2">
+                <span
+                  className="rounded-full bg-black/20 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.14em]"
+                  style={{ fontFamily: "var(--font-roboto)" }}
+                >
+                  {project.badge}
+                </span>
+                <span className="text-xs font-mono uppercase tracking-wider opacity-80">{project.category}</span>
+              </div>
+
+              <h4
+                className="mt-4 text-2xl md:text-3xl font-bold uppercase leading-tight tracking-[-0.03em]"
+                style={{ fontFamily: "var(--font-cabinet)" }}
+              >
+                {project.title}
+              </h4>
+              {project.subtitle && (
+                <p className="mt-1 text-xs font-semibold uppercase tracking-wide opacity-90">{project.subtitle}</p>
+              )}
+
+              <p className="mt-4 text-sm md:text-base leading-relaxed opacity-95">
+                {project.description}
+              </p>
+            </div>
+
+            <div className="mt-6 pt-4 border-t border-white/30 flex flex-wrap gap-2">
+              {project.tags.map((tag) => (
+                <span
+                  key={tag}
+                  className="rounded-md bg-white text-black px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider"
+                  style={{ fontFamily: "var(--font-roboto)" }}
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
           </div>
         ))}
       </div>

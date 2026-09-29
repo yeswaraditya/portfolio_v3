@@ -18,6 +18,7 @@ const translations: Record<Language, Record<string, string>> = {
     // nav
     skills: "Skills",
     passionProjects: "Passion Projects",
+    myPlanets: "My Planets",
     replyTime: "reply you in 10min!",
     flashback: "Flashback",
     headerLive: "LIVE",
@@ -97,6 +98,7 @@ const translations: Record<Language, Record<string, string>> = {
     // nav
     skills: "Habilidades",
     passionProjects: "Proyectos de Pasión",
+    myPlanets: "Mis Planetas",
     replyTime: "¡te respondo en 10min!",
     flashback: "Flashback",
     headerLive: "EN VIVO",
@@ -176,6 +178,7 @@ const translations: Record<Language, Record<string, string>> = {
     // nav
     skills: "Compétences",
     passionProjects: "Projets Passion",
+    myPlanets: "Mes Planètes",
     replyTime: "réponse dans 10min!",
     headerLive: "EN DIRECT",
     headerMusic: "MUSIQUE",
@@ -254,6 +257,7 @@ const translations: Record<Language, Record<string, string>> = {
     // nav
     skills: "スキル",
     passionProjects: "情熱プロジェクト",
+    myPlanets: "私の惑星",
     replyTime: "10分以内に返信します！",
     headerLive: "配信中",
     headerMusic: "ミュージック",
@@ -332,6 +336,7 @@ const translations: Record<Language, Record<string, string>> = {
     // nav
     skills: "कौशल",
     passionProjects: "जुनूनी परियोजनाएं",
+    myPlanets: "मेरे ग्रह",
     replyTime: "10 मिनट में जवाब दूंगा!",
     headerLive: "लाइव",
     headerMusic: "संगीत",

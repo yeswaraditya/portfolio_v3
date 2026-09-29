@@ -6,7 +6,7 @@ export default function Home() {
   return (
     <main className="h-screen w-full overflow-hidden bg-[#EEEEEE] flex flex-col">
       <Header />
-      <div className="flex-1 flex flex-col min-h-0">
+      <div className="flex min-h-0 flex-1 flex-col pt-16">
         <Hero />
         <BottomGrid />
       </div>
