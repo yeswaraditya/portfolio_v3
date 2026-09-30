@@ -333,6 +333,13 @@ export default function SkillsCatalog() {
                 </p>
               </header>
 
+              {group.id === "interface" && (
+                <div className="flex items-center justify-between gap-5 border-t-2 border-black bg-[#FFE600] px-6 py-4 md:px-8">
+                  <p className="max-w-xl text-sm font-medium leading-snug md:text-base">This is the complete UI/UX journey: the skills, tools, and systems behind the selected work.</p>
+                  <Link href="/planets/ui-ux" className="shrink-0 border-2 border-black bg-black px-4 py-2 text-[11px] font-bold uppercase tracking-[0.12em] text-white transition-colors hover:bg-[#ff4d00] hover:border-[#ff4d00]" style={{ fontFamily: "var(--font-roboto)" }}>Selected design work</Link>
+                </div>
+              )}
+
               <div className="grid gap-px bg-black/10 md:grid-cols-2">
                 {group.skills.map((skill) => (
                   <div key={skill.name} className="bg-white px-6 py-6 md:px-8 md:py-7">
@@ -369,3 +376,4 @@ export default function SkillsCatalog() {
     </section>
   );
 }
+import Link from "next/link";

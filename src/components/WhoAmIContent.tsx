@@ -2,12 +2,38 @@
 
 import React, { useRef } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useLanguage } from "../context/LanguageContext";
 
 gsap.registerPlugin(ScrollTrigger);
+
+const MILESTONES = [
+  { year: "2004", title: "The beginning", detail: "Born on 15 June in Khammam, Telangana." },
+  { year: "Childhood", title: "What makes a product work?", detail: "Growing up in Vijayawada, I was eager to understand how things were made. I would unscrew my RC car and explore what was inside." },
+  { year: "2019–2020", title: "School years", detail: "10th standard at Kennedy High School, CBSE." },
+  { year: "During COVID", title: "Time to explore computers", detail: "The pandemic gave me more time to explore computers and follow my curiosity." },
+  { year: "2020–2022", title: "Finding a direction", detail: "MPC intermediate studies at Narayana Junior College." },
+  { year: "2022–2026", title: "Computer science", detail: "B.Tech in Computer Science & Engineering at PVPSIT, affiliated with JNTUK." },
+  { year: "Second year of college", title: "Teaching myself UI/UX", detail: "I started learning UI/UX on my own, adding interface and visual design to my interest in how products work." },
+  { year: "2024", title: "Building communities", detail: "Innovation Club President, ED-CELL NEC Lead, and Notion Student Clubs Lead Council member." },
+  { year: "2025", title: "Design & recognition", detail: "UI/UX & Graphic Design Domain Master at GDG On Campus. HackVyuha’25 and IIT Bombay NEC’25 recognition." },
+  { year: "Today", title: "Three paths, one practice", detail: "Software engineering and machine learning, visual design, and a growing focus on cybersecurity." },
+] as const;
+
+function Chapter({ number, title, children, id }: { number: string; title: string; children: React.ReactNode; id: string }) {
+  return (
+    <header id={id} className="wai-block mt-20 grid scroll-mt-28 gap-5 border-t border-black/20 pt-6 md:mt-28 md:grid-cols-12 md:gap-8">
+      <p className="font-mono text-xs uppercase tracking-[0.15em] text-black/50 md:col-span-3">{number} / Life notes</p>
+      <div className="md:col-span-9">
+        <h2 className="font-[family-name:var(--font-cabinet)] text-4xl font-bold uppercase leading-[0.95] tracking-[-0.04em] md:text-6xl">{title}</h2>
+        <div className="mt-5 max-w-2xl text-base leading-relaxed text-black/70 md:text-lg">{children}</div>
+      </div>
+    </header>
+  );
+}
 
 function GreenDots({ className = "" }: { className?: string }) {
   return (
@@ -38,11 +64,11 @@ function Frame({
 }) {
   return (
     <figure
-      className={`wai-block bg-white p-2 shadow-[7px_7px_0_#111] ${className}`}
+      className={`wai-block border border-black/10 bg-white p-2 shadow-[4px_5px_0_rgba(0,0,0,0.14)] ${className}`}
       style={{ transform: `rotate(${rotate}deg)` }}
     >
       <div className={`relative w-full overflow-hidden bg-neutral-100 ${aspect}`}>
-        <Image src={src} alt={alt} fill className={fit === "contain" ? "object-contain" : "object-cover"} />
+        <Image src={src} alt={alt} fill sizes="(max-width: 640px) 90vw, (max-width: 1024px) 50vw, 550px" className={fit === "contain" ? "object-contain" : "object-cover"} />
       </div>
       {caption ? (
         <figcaption
@@ -61,6 +87,7 @@ export default function WhoAmIContent() {
   const { translate } = useLanguage();
 
   useGSAP(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     gsap.from(".wai-intro", {
       y: 24,
       opacity: 0,
@@ -81,13 +108,13 @@ export default function WhoAmIContent() {
 
   return (
     <div ref={ref} className="mx-auto w-full max-w-[1180px] px-5 pb-28 pt-28 md:px-10 md:pt-32">
-      <header className="wai-intro flex items-end justify-between gap-6">
-        <div className="min-w-0">
+      <header className="wai-intro grid items-end gap-10 border-b border-black/20 pb-10 md:grid-cols-12 md:pb-14">
+        <div className="min-w-0 md:col-span-8">
           <p
             className="text-[12px] font-bold uppercase tracking-[0.32em]"
             style={{ fontFamily: "var(--font-roboto)" }}
           >
-            15 / 06 / 2004
+            Eswar Aditya / A personal archive
           </p>
           <h1
             className="mt-3 max-w-full text-[clamp(3.2rem,8.5vw,7.2rem)] font-bold uppercase leading-[0.82] tracking-[-0.05em]"
@@ -96,16 +123,36 @@ export default function WhoAmIContent() {
             {translate("whoAmI")}
           </h1>
           <p className="mt-5 max-w-[36ch] text-base leading-relaxed md:text-lg">
-            {translate("born")}
+            I’m Eswar Aditya. A designer, developer, and Computer Science graduate, exploring how things look, how they work, and how to make them safer.
           </p>
         </div>
-        <GreenDots className="mb-3 hidden sm:grid" />
+        <div className="flex flex-col gap-5 md:col-span-4 md:border-l md:border-black/20 md:pl-8">
+          <GreenDots className="w-fit" />
+          <dl className="space-y-3 text-sm">
+            <div><dt className="font-mono text-xs uppercase tracking-wider text-black/45">Born</dt><dd className="mt-1">15 June 2004 · Khammam, Telangana</dd></div>
+            <div><dt className="font-mono text-xs uppercase tracking-wider text-black/45">Education</dt><dd className="mt-1">Computer Science & Engineering · PVPSIT</dd></div>
+            <div><dt className="font-mono text-xs uppercase tracking-wider text-black/45">Grew up in</dt><dd className="mt-1">Vijayawada, Andhra Pradesh</dd></div>
+            <div><dt className="font-mono text-xs uppercase tracking-wider text-black/45">My practice</dt><dd className="mt-1">Design · Development · Cybersecurity</dd></div>
+          </dl>
+        </div>
       </header>
+
+      <nav aria-label="Personal story chapters" className="mt-6 flex flex-wrap gap-x-6 gap-y-3 font-mono text-xs uppercase tracking-wide">
+        {[["#beginnings", "01 Beginnings"], ["#campus", "02 Campus life"], ["#today", "03 Today"], ["#timeline", "Life & work timeline"]].map(([href, label]) => (
+          <a key={href} href={href} className="border-b border-transparent pb-1 transition-colors hover:border-[#FF4D00] hover:text-[#FF4D00]">{label}</a>
+        ))}
+      </nav>
+
+      <Chapter number="01" title="Every story starts somewhere." id="beginnings">
+        <p>{translate("born")}. I grew up in Vijayawada, curious about what makes a product work. A car was a complete product to me, and I wanted to understand the parts behind it. I would unscrew my RC car and explore what was inside.</p>
+        <p className="mt-4">During COVID, I had more time to explore computers. That gave my curiosity another place to grow.</p>
+      </Chapter>
 
       <div className="mt-14 grid grid-cols-12 items-end gap-4 md:mt-20 md:gap-6">
         <Frame
           src="/about/baby.jpg"
           alt="Day one"
+          caption="The beginning / Family archive"
           rotate={-2}
           aspect="aspect-[4/3]"
           className="col-span-7 md:col-span-5"
@@ -113,6 +160,7 @@ export default function WhoAmIContent() {
         <Frame
           src="/about/childhood-suit.jpg"
           alt="Childhood"
+          caption="Childhood / Family archive"
           rotate={2}
           aspect="aspect-[3/4]"
           className="col-span-5 md:col-span-3 md:col-start-9"
@@ -161,6 +209,12 @@ export default function WhoAmIContent() {
         <GreenDots className="col-span-2 mt-2 justify-self-end md:col-span-2 md:col-start-11 md:mt-24" />
       </div>
 
+      <Chapter number="02" title="Learning. Making. Sharing." id="campus">
+        <p>From Kennedy High School and Narayana Junior College to studying Computer Science at PVPSIT, the journey grew beyond the classroom. Design workshops, student clubs, and entrepreneurship became part of it.</p>
+        <p className="mt-4">In my second year of college, I started teaching myself UI/UX. My interest in how products work grew to include how people experience them. I also worked as a designer with GDG On Campus from 2023 to 2026.</p>
+        <p className="mt-4">I served as President of the Innovation Club, NEC Lead at ED-CELL, a Lead Council member at Notion Student Clubs, and UI/UX & Graphic Design Domain Master at GDG On Campus.</p>
+      </Chapter>
+
       <div className="mt-14 grid grid-cols-12 items-end gap-4 md:mt-20 md:gap-8">
         <Frame
           src="/about/speaking.jpg"
@@ -199,222 +253,88 @@ export default function WhoAmIContent() {
         />
       </div>
 
-      {/* Bio Summary Section */}
-      <section className="wai-block mt-16 rounded-2xl border-2 border-black bg-[#FFE600] p-6 text-black shadow-[8px_8px_0_#111] md:mt-24 md:p-10">
-        <p
-          className="text-[11px] font-bold uppercase tracking-[0.24em]"
-          style={{ fontFamily: "var(--font-roboto)" }}
-        >
-          Overview & Focus
-        </p>
-        <h2
-          className="mt-2 text-2xl font-bold uppercase tracking-[-0.03em] md:text-4xl"
-          style={{ fontFamily: "var(--font-cabinet)" }}
-        >
-          Software Engineering, ML & Cybersecurity
-        </h2>
-        <p className="mt-4 max-w-4xl text-base leading-relaxed md:text-lg font-medium text-black/90">
-          Computer Science graduate with expertise in Software Development and Machine Learning, currently expanding into the cybersecurity domain with a practical focus on network reconnaissance, ethical hacking, and Security Operations Center (SOC) analysis. Dedicated to building visually compelling, user-centered digital experiences and intelligent systems.
-        </p>
-      </section>
+      <Chapter number="03" title="Still curious. Still building." id="today">
+        <p>My work spans visual identity and interface design, software engineering, and machine learning. I’m now expanding into cybersecurity through network reconnaissance, ethical hacking, and SOC analysis.</p>
+        <p className="mt-4">Away from the screen, cooking is my hobby.</p>
+        <p className="mt-4">The career archive holds the detailed record. Here, the photos and milestones tell the personal story behind it.</p>
+        <Link href="/planets" className="mt-6 inline-block border-b-2 border-[#FF4D00] pb-1 font-mono text-sm font-bold uppercase tracking-wide text-black hover:text-[#FF4D00]">Explore my Career Playground</Link>
+      </Chapter>
 
-      {/* Experience & Leadership Section */}
-      <section className="wai-block mt-16 md:mt-20">
-        <div className="flex items-center justify-between gap-4 border-b-2 border-black pb-4">
-          <h2
-            className="text-[clamp(2.2rem,5vw,4.5rem)] font-bold uppercase leading-none tracking-[-0.04em]"
-            style={{ fontFamily: "var(--font-cabinet)" }}
-          >
-            Leadership & Experience
-          </h2>
-          <GreenDots className="hidden sm:grid" />
-        </div>
-
-        <div className="mt-8 grid gap-6 md:grid-cols-2">
+      <section aria-labelledby="career-notes-heading" className="wai-block mt-12">
+        <p className="font-mono text-xs uppercase tracking-[0.15em] text-black/50">The work so far</p>
+        <h2 id="career-notes-heading" className="mt-3 font-[family-name:var(--font-cabinet)] text-3xl font-bold uppercase tracking-tight md:text-4xl">Three sides of my practice.</h2>
+        <div className="mt-6 grid border-y border-black/20 md:grid-cols-3">
           {[
-            {
-              role: "UI/UX & Graphic Design Domain Master",
-              org: "Google Developer Groups On Campus - PVPSIT",
-              period: "Oct 2025 – Aug 2026",
-              detail: "Recognized twice for leadership in UI/UX and Graphic Design. Mentored members, designed key digital assets, and led visual identity workflows.",
-              accent: "#B4FF00",
-            },
-            {
-              role: "President",
-              org: "Innovation Club - PVPSIT",
-              period: "Jan 2024 – Aug 2026",
-              detail: "Led innovation events, workshops, hackathons, and student-driven technical initiatives across campus.",
-              accent: "#FFE600",
-            },
-            {
-              role: "Member of Lead Council",
-              org: "Notion Student Clubs (PVPSIT)",
-              period: "Dec 2024 – Aug 2026",
-              detail: "Led the design team and oversaw workflows, content systems, and productivity tool coordination.",
-              accent: "#FF4D00",
-            },
-            {
-              role: "NEC Lead",
-              org: "ED-CELL, PVPSIT",
-              period: "Aug 2024 – Aug 2026",
-              detail: "Spearheaded entrepreneurship initiatives and national competition representation.",
-              accent: "#0055FF",
-              textColor: "text-white",
-            },
-          ].map((exp, idx) => (
-            <div
-              key={idx}
-              className={`rounded-2xl border-2 border-black p-6 shadow-[6px_6px_0_#111] transition-transform hover:-translate-y-1 ${
-                exp.textColor ? exp.textColor : "text-black"
-              }`}
-              style={{ backgroundColor: exp.accent }}
-            >
-              <div className="flex flex-wrap items-center justify-between gap-2">
-                <span
-                  className="rounded-full bg-black/10 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.14em]"
-                  style={{ fontFamily: "var(--font-roboto)" }}
-                >
-                  {exp.period}
-                </span>
-              </div>
-              <h3
-                className="mt-3 text-xl font-bold uppercase leading-tight md:text-2xl"
-                style={{ fontFamily: "var(--font-cabinet)" }}
-              >
-                {exp.role}
-              </h3>
-              <p
-                className="mt-1 text-sm font-semibold uppercase tracking-wider opacity-90"
-                style={{ fontFamily: "var(--font-roboto)" }}
-              >
-                {exp.org}
-              </p>
-              <p className="mt-3 text-sm leading-relaxed opacity-95">{exp.detail}</p>
-            </div>
+            { name: "UI/UX & design", href: "/skills#interface", detail: "Self-taught since my second year of college. My work includes TrackCode’s contest dashboards, component systems, graphic design, and branding. I delivered two hands-on Figma workshops and led design work in GDG and Notion Student Clubs.", learning: "Wireframing, user journeys, prototyping, visual identity, and reusable components." },
+            { name: "Development & ML", href: "/planets/development", detail: "I built AskIt, an anonymous Q&A platform, and MarkMe, an event-management app. My ML work includes UPI fraud detection and an explainable customer-feedback RAG system using graph-based orchestration and hybrid retrieval.", learning: "Real-time web applications, mobile development, APIs, data preprocessing, feature engineering, and model evaluation." },
+            { name: "Cybersecurity", href: "/planets/cybersecurity", detail: "I’m expanding into cybersecurity with a practical focus on network reconnaissance, ethical hacking, and SOC analysis. My current toolkit includes Kali Linux, Nmap, theHarvester, Maigret, and ProxyChains.", learning: "Network mapping, open-source intelligence, vulnerability-assessment concepts, and defensive analysis." },
+          ].map((area, index) => (
+            <article key={area.name} className="border-b border-black/15 py-6 last:border-b-0 md:border-b-0 md:px-6 md:first:pl-0 md:last:pr-0 md:[&:not(:last-child)]:border-r">
+              <p className="font-mono text-xs text-[#FF4D00]">0{index + 1}</p>
+              <h3 className="mt-3 font-[family-name:var(--font-cabinet)] text-2xl font-bold">{area.name}</h3>
+              <p className="mt-4 text-base leading-relaxed text-black/70">{area.detail}</p>
+              <p className="mt-4 text-sm leading-relaxed text-black/60"><span className="font-semibold text-black">Learning &amp; practice: </span>{area.learning}</p>
+              <Link href={area.href} className="mt-5 inline-block border-b border-black pb-1 font-mono text-xs font-bold uppercase tracking-wide hover:border-[#FF4D00] hover:text-[#FF4D00]">Explore this journey</Link>
+            </article>
           ))}
         </div>
       </section>
 
-      {/* Education & Honours Grid */}
-      <div className="mt-16 grid grid-cols-1 gap-10 md:mt-24 md:grid-cols-12">
-        {/* Education */}
-        <section className="wai-block md:col-span-7">
-          <h2
-            className="border-b-2 border-black pb-3 text-[clamp(1.8rem,4vw,3.2rem)] font-bold uppercase tracking-[-0.04em]"
-            style={{ fontFamily: "var(--font-cabinet)" }}
-          >
-            Education & Academic Track
-          </h2>
-          <div className="mt-6 flex flex-col gap-5">
-            {[
-              {
-                degree: "B.Tech in Computer Science & Engineering",
-                institution: "Prasad V Potluri Siddhartha Institute of Technology (JNTUK)",
-                period: "2022 – 2026",
-                grade: "CGPA: 7.84 / 10",
-                badge: "Undergraduate",
-              },
-              {
-                degree: "12th Standard (MPC - Intermediate)",
-                institution: "Narayana Junior College (Board of Intermediate Education)",
-                period: "2020 – 2022",
-                grade: "Final Grade: 71%",
-                badge: "Higher Secondary",
-              },
-              {
-                degree: "10th Standard (CBSE)",
-                institution: "Kennedy High School",
-                period: "2019 – 2020",
-                grade: "Final Grade: 75%",
-                badge: "Secondary School",
-              },
-            ].map((edu, idx) => (
-              <div
-                key={idx}
-                className="rounded-xl border-2 border-black bg-white p-5 text-black shadow-[5px_5px_0_#111]"
-              >
-                <div className="flex items-center justify-between gap-2">
-                  <span
-                    className="text-[10px] font-bold uppercase tracking-[0.16em] text-neutral-500"
-                    style={{ fontFamily: "var(--font-roboto)" }}
-                  >
-                    {edu.period} • {edu.badge}
-                  </span>
-                  <span className="rounded bg-[#B4FF00] px-2 py-0.5 text-xs font-bold text-black">
-                    {edu.grade}
-                  </span>
-                </div>
-                <h3
-                  className="mt-2 text-lg font-bold uppercase leading-tight md:text-xl"
-                  style={{ fontFamily: "var(--font-cabinet)" }}
-                >
-                  {edu.degree}
-                </h3>
-                <p className="mt-1 text-xs font-semibold text-neutral-600">{edu.institution}</p>
-              </div>
-            ))}
+      <section id="timeline" className="wai-block mt-20 scroll-mt-28 border-t border-black/20 pt-6 md:mt-28">
+        <div className="grid gap-6 md:grid-cols-12">
+          <div className="md:col-span-4">
+            <p className="font-mono text-xs uppercase tracking-wide text-[#FF4D00]">2004 — today</p>
+            <h2 className="mt-4 font-[family-name:var(--font-cabinet)] text-4xl font-bold uppercase leading-[0.9] tracking-[-0.04em] md:text-5xl">Life &amp; work<br />timeline</h2>
+            <p className="mt-5 max-w-xs text-sm leading-relaxed text-black/60">The milestones so far. More memories and events will be added as this personal archive grows.</p>
           </div>
-        </section>
+          <ol className="border-l border-black/20 md:col-span-8">
+            {MILESTONES.map((event) => (
+              <li key={event.year} className="relative border-b border-black/10 pb-7 pl-6 pt-5 first:pt-0 last:border-0 [&:first-child>span]:top-1">
+                <span aria-hidden className="absolute -left-[5px] top-6 h-[9px] w-[9px] rounded-full bg-[#FF4D00]" />
+                <p className="font-mono text-xs uppercase tracking-wide text-black/50">{event.year}</p>
+                <h3 className="mt-2 font-[family-name:var(--font-cabinet)] text-2xl font-bold tracking-tight">{event.title}</h3>
+                <p className="mt-2 max-w-xl text-base leading-relaxed text-black/65">{event.detail}</p>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
 
-        {/* Honours & Awards */}
-        <section className="wai-block md:col-span-5">
-          <h2
-            className="border-b-2 border-black pb-3 text-[clamp(1.8rem,4vw,3.2rem)] font-bold uppercase tracking-[-0.04em]"
-            style={{ fontFamily: "var(--font-cabinet)" }}
-          >
-            Honours & Awards
-          </h2>
-          <div className="mt-6 flex flex-col gap-5">
-            {[
-              {
-                title: "HackVyuha'25 National Hackathon",
-                award: "2nd Place Finalist (Out of 250+ teams)",
-                org: "National Hackathon Competition",
-                color: "bg-[#0055FF]",
-                text: "text-white",
-              },
-              {
-                title: "IIT Bombay NEC'25",
-                award: "National Finalist",
-                org: "IIT Bombay",
-                color: "bg-[#FF4D00]",
-                text: "text-white",
-              },
-              {
-                title: "NEC '24 Advanced Track",
-                award: "Top 20 Selection",
-                org: "National Entrepreneurship Challenge",
-                color: "bg-white",
-                text: "text-black",
-              },
-            ].map((award, idx) => (
-              <div
-                key={idx}
-                className={`rounded-xl border-2 border-black p-5 shadow-[5px_5px_0_#111] ${award.color} ${award.text}`}
-              >
-                <span
-                  className="text-[10px] font-bold uppercase tracking-[0.16em] opacity-80"
-                  style={{ fontFamily: "var(--font-roboto)" }}
-                >
-                  {award.org}
-                </span>
-                <h3
-                  className="mt-1 text-lg font-bold uppercase leading-tight md:text-xl"
-                  style={{ fontFamily: "var(--font-cabinet)" }}
-                >
-                  {award.title}
-                </h3>
-                <p className="mt-2 text-xs font-bold tracking-wide">{award.award}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-      </div>
+      <section className="wai-block mt-12 grid gap-8 border-t border-black/20 pt-6 md:grid-cols-2">
+        <div>
+          <h2 className="font-[family-name:var(--font-cabinet)] text-3xl font-bold uppercase tracking-tight">Learning beyond class.</h2>
+          <p className="mt-4 text-base leading-relaxed text-black/70">Alongside my degree, I completed Microsoft Azure Fundamentals (AZ-900), Agile with Atlassian Jira, and Red Hat Enterprise Linux Fundamentals. My profile also includes Notion Advanced and Workflows badges, prompt engineering, and data visualisation.</p>
+        </div>
+        <div>
+          <h2 className="font-[family-name:var(--font-cabinet)] text-3xl font-bold uppercase tracking-tight">Working with people.</h2>
+          <p className="mt-4 text-base leading-relaxed text-black/70">As NEC Lead, I led a 24-member team through strategy, coordination, and execution. The competitive journey includes NEC ’24 Advanced Track Top 20 selection, IIT Bombay NEC ’25 national finalist recognition, second place among 250+ teams at HackVyuha ’25, and first prize in an E-Cell startup-ideation competition.</p>
+        </div>
+      </section>
+
+      <section className="wai-block mt-16 border-l-4 border-[#FF4D00] bg-white p-6 text-black md:mt-24 md:p-10">
+        <p className="text-[11px] font-bold uppercase tracking-[0.24em]" style={{ fontFamily: "var(--font-roboto)" }}>
+          Beyond the photos
+        </p>
+        <h2 className="mt-2 text-2xl font-bold uppercase tracking-[-0.03em] md:text-4xl" style={{ fontFamily: "var(--font-cabinet)" }}>
+          The work behind the person
+        </h2>
+        <p className="mt-4 max-w-3xl text-base leading-relaxed md:text-lg font-medium text-black/90">
+          Leadership, education, honours, and the work I&apos;ve built live in a dedicated career archive.
+        </p>
+        <Link
+          href="/experience"
+          className="mt-6 inline-flex items-center bg-black px-5 py-3 text-sm font-bold uppercase tracking-wide text-white transition-colors hover:bg-[#FF4D00]"
+          style={{ fontFamily: "var(--font-roboto)" }}
+        >
+          Open career archive
+        </Link>
+      </section>
 
       <div className="mt-16 flex justify-center md:mt-24">
         <Frame
           src="/about/flow-work.gif"
           alt="Music and work"
+          caption="Music & work / The everyday rhythm"
           fit="contain"
           aspect="aspect-[3/4]"
           className="w-full max-w-[380px] bg-black"
@@ -423,4 +343,3 @@ export default function WhoAmIContent() {
     </div>
   );
 }
-

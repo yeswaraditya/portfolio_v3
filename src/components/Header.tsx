@@ -38,8 +38,8 @@ export default function Header() {
   const playFill = isSkills ? "fill-white" : "fill-black";
 
   return (
-    <header className={`fixed top-0 left-0 w-full z-50 px-6 py-6 md:px-12 ${ink} text-sm ${isHome ? "tracking-wide" : "uppercase tracking-wide"} transition-colors duration-300 ${isAbout ? "bg-accent-orange" : isSkills && skillsScrolled ? "bg-[#0055FF]/90 backdrop-blur-md" : isTransparent ? "bg-transparent" : "bg-[#EEEEEE]"}`} style={{ fontFamily: "var(--font-roboto)" }}>
-      <div className="flex flex-row items-center justify-between w-full h-full">
+    <header className={`fixed top-0 left-0 w-full z-50 px-6 py-6 md:px-12 ${ink} text-sm ${isHome ? "tracking-wide" : "uppercase tracking-wide"} transition-colors duration-300 ${isAbout ? "border-b border-black/10 bg-[#F2F2EE]/95 backdrop-blur-md" : isSkills && skillsScrolled ? "bg-[#0055FF]/90 backdrop-blur-md" : isTransparent ? "bg-transparent" : "bg-[#EEEEEE]"}`} style={{ fontFamily: "var(--font-roboto)" }}>
+      <div className={`flex flex-row items-center justify-between w-full h-full ${isAbout ? "flex-wrap gap-x-6 gap-y-3" : ""}`}>
         {/* Logo & Music Toggle */}
         <div className="flex items-center gap-6">
           <Link href="/" className="font-bold hover:text-accent-orange transition-colors">
@@ -69,10 +69,10 @@ export default function Header() {
         </div>
 
         {/* Navigation */}
-        <div className="flex flex-row items-center space-x-5 md:space-x-12 lg:space-x-16">
-           <Link href="/skills" className="hover:text-accent-orange transition-colors inline-block whitespace-nowrap">{translate("skills")}</Link>
+        <div className={`flex flex-row items-center ${isAbout ? "flex-wrap gap-x-5 gap-y-2 text-xs sm:text-sm md:gap-x-12 lg:gap-x-16" : "space-x-5 md:space-x-12 lg:space-x-16"}`}>
            <Link href="/passion-projects" className="hover:text-accent-orange transition-colors inline-block whitespace-nowrap">{translate("passionProjects")}</Link>
-           <Link href="/planets" className="hover:text-accent-orange transition-colors inline-block whitespace-nowrap">{translate("myPlanets")}</Link>
+           <Link href="/planets" className="hover:text-accent-orange transition-colors inline-block whitespace-nowrap">Career Playground</Link>
+           <Link href="/experience" className="hidden xl:inline-block hover:text-accent-orange transition-colors whitespace-nowrap">Experience</Link>
            <Link href="/coffee" className="hover:text-accent-orange transition-colors hidden md:inline-block whitespace-nowrap">{translate("replyTime")}</Link>
         </div>
       </div>

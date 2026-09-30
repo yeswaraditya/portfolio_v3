@@ -1,8 +1,8 @@
 import PlanetsContent from "@/components/PlanetsContent";
 
 export const metadata = {
-  title: "My Planets | Eswar Aditya Portfolio",
-  description: "Explore the creative and technical spheres of Eswar Aditya's ecosystem.",
+  title: "Career Playground | Eswar Aditya",
+  description: "An interactive map of Eswar Aditya's design, engineering, and cybersecurity work.",
 };
 
 export default function PlanetsPage() {
